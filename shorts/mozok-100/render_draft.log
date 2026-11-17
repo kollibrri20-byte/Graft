@@ -1,6 +1,0 @@
-build.py:164: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
-  void.use_nodes = True
-build.py:180: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
-  glass.use_nodes = True
-build.py:293: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
-  m.use_nodes = True
