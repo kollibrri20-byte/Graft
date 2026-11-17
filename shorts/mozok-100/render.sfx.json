@@ -1,5 +1,17 @@
 [
  {
+  "sfx": "step",
+  "frame": 2,
+  "t": 0.067,
+  "gain": -6
+ },
+ {
+  "sfx": "step",
+  "frame": 2,
+  "t": 0.067,
+  "gain": -6
+ },
+ {
   "sfx": "wood",
   "frame": 24,
   "t": 0.8,
@@ -10,6 +22,12 @@
   "frame": 24,
   "t": 0.8,
   "gain": -8
+ },
+ {
+  "sfx": "step",
+  "frame": 34,
+  "t": 1.133,
+  "gain": -6
  },
  {
   "sfx": "whoosh",
@@ -80,6 +98,13 @@
   "seconds": 3
  },
  {
+  "sfx": "thud",
+  "frame": 764,
+  "t": 25.467,
+  "prompt": "hardcover book falls on a wooden floor",
+  "gain": -4
+ },
+ {
   "sfx": "whoosh",
   "frame": 798,
   "t": 26.6,
@@ -96,11 +121,30 @@
   "seconds": 3
  },
  {
+  "sfx": "step",
+  "frame": 943,
+  "t": 31.433,
+  "gain": -6
+ },
+ {
+  "sfx": "step",
+  "frame": 943,
+  "t": 31.433,
+  "gain": -8
+ },
+ {
   "sfx": "ding",
   "frame": 943,
   "t": 31.433,
-  "prompt": "hospital heart monitor beep",
-  "gain": -12
+  "prompt": "hospital heart monitor beeping slowly, quiet ward ambience",
+  "gain": -12,
+  "seconds": 3
+ },
+ {
+  "sfx": "step",
+  "frame": 975,
+  "t": 32.5,
+  "gain": -6
  },
  {
   "sfx": "whoosh",
@@ -111,9 +155,15 @@
   "seconds": 2
  },
  {
+  "sfx": "step",
+  "frame": 1145,
+  "t": 38.167,
+  "gain": -6
+ },
+ {
   "sfx": "ding",
-  "frame": 1135,
-  "t": 37.833,
+  "frame": 1182,
+  "t": 39.4,
   "prompt": "warm positive chime, resolved",
   "gain": -8
  }
