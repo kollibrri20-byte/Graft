@@ -31,139 +31,139 @@
  },
  {
   "sfx": "whoosh",
-  "frame": 144,
-  "t": 4.8,
+  "frame": 133,
+  "t": 4.433,
   "prompt": "soft cinematic whoosh into a glowing x-ray view",
   "gain": -8
  },
  {
   "sfx": "ding",
-  "frame": 197,
-  "t": 6.567,
+  "frame": 188,
+  "t": 6.267,
   "prompt": "soft electric spark of a single glowing neuron lighting up",
   "gain": -6
  },
  {
   "sfx": "thud",
-  "frame": 276,
-  "t": 9.2,
+  "frame": 261,
+  "t": 8.7,
   "prompt": "deep bass hit, a myth busted, short impact",
   "gain": -6
  },
  {
   "sfx": "heavy",
-  "frame": 293,
-  "t": 9.767,
+  "frame": 282,
+  "t": 9.4,
   "prompt": "MRI scanner loud rhythmic knocking and humming",
   "gain": -10,
   "seconds": 3
  },
  {
   "sfx": "ding",
-  "frame": 358,
-  "t": 11.933,
+  "frame": 341,
+  "t": 11.367,
   "prompt": "rapid sequence of soft electric sparkles, neurons lighting up one after another",
   "gain": -8,
   "seconds": 2
  },
  {
   "sfx": "ding",
-  "frame": 447,
-  "t": 14.9,
+  "frame": 423,
+  "t": 14.1,
   "prompt": "gentle rhythmic electrical blips, calm brain activity",
   "gain": -10,
   "seconds": 4
  },
  {
   "sfx": "whoosh",
-  "frame": 598,
-  "t": 19.933,
+  "frame": 590,
+  "t": 19.667,
   "prompt": "deep cinematic whoosh into an x-ray view",
   "gain": -8
  },
  {
   "sfx": "heavy",
-  "frame": 666,
-  "t": 22.2,
+  "frame": 659,
+  "t": 21.967,
   "prompt": "massive electric surge, crackling high voltage burst, rising",
   "gain": -4,
   "seconds": 2.5
  },
  {
   "sfx": "crack",
-  "frame": 721,
-  "t": 24.033,
+  "frame": 713,
+  "t": 23.767,
   "prompt": "chaotic electrical static crackling, buzzing interference",
   "gain": -6,
   "seconds": 3
  },
  {
   "sfx": "thud",
-  "frame": 764,
-  "t": 25.467,
+  "frame": 765,
+  "t": 25.5,
   "prompt": "hardcover book falls on a wooden floor",
   "gain": -4
  },
  {
   "sfx": "whoosh",
-  "frame": 798,
-  "t": 26.6,
+  "frame": 823,
+  "t": 27.433,
   "prompt": "sound fading out into muffled silence, low drone",
   "gain": -6,
   "seconds": 2
  },
  {
   "sfx": "heavy",
-  "frame": 833,
-  "t": 27.767,
+  "frame": 856,
+  "t": 28.533,
   "prompt": "tense pulsing electrical storm, distorted crackle",
   "gain": -6,
   "seconds": 3
  },
  {
   "sfx": "step",
-  "frame": 943,
-  "t": 31.433,
+  "frame": 965,
+  "t": 32.167,
   "gain": -6
  },
  {
   "sfx": "step",
-  "frame": 943,
-  "t": 31.433,
+  "frame": 965,
+  "t": 32.167,
   "gain": -8
  },
  {
   "sfx": "ding",
-  "frame": 943,
-  "t": 31.433,
+  "frame": 965,
+  "t": 32.167,
   "prompt": "hospital heart monitor beeping slowly, quiet ward ambience",
   "gain": -12,
   "seconds": 3
  },
  {
   "sfx": "step",
-  "frame": 975,
-  "t": 32.5,
+  "frame": 997,
+  "t": 33.233,
   "gain": -6
  },
  {
   "sfx": "whoosh",
-  "frame": 1000,
-  "t": 33.333,
+  "frame": 1018,
+  "t": 33.933,
   "prompt": "soothing soft whoosh, calming magical shimmer",
   "gain": -8,
   "seconds": 2
  },
  {
   "sfx": "step",
-  "frame": 1145,
-  "t": 38.167,
+  "frame": 1168,
+  "t": 38.933,
   "gain": -6
  },
  {
   "sfx": "ding",
-  "frame": 1182,
-  "t": 39.4,
+  "frame": 1205,
+  "t": 40.167,
   "prompt": "warm positive chime, resolved",
   "gain": -8
  }
