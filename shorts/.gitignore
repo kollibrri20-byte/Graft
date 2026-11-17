@@ -1,5 +1,5 @@
-shorts/*/render*.mp4
-shorts/*/render*.log
-shorts/*/preview/
-shorts/*/sfx/
+*/render*.mp4
+*/render*.log
+*/preview/
+*/sfx/
 *.wav
