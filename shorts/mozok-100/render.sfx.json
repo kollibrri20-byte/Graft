@@ -1,0 +1,120 @@
+[
+ {
+  "sfx": "wood",
+  "frame": 24,
+  "t": 0.8,
+  "gain": -8
+ },
+ {
+  "sfx": "wood",
+  "frame": 24,
+  "t": 0.8,
+  "gain": -8
+ },
+ {
+  "sfx": "whoosh",
+  "frame": 144,
+  "t": 4.8,
+  "prompt": "soft cinematic whoosh into a glowing x-ray view",
+  "gain": -8
+ },
+ {
+  "sfx": "ding",
+  "frame": 197,
+  "t": 6.567,
+  "prompt": "soft electric spark of a single glowing neuron lighting up",
+  "gain": -6
+ },
+ {
+  "sfx": "thud",
+  "frame": 276,
+  "t": 9.2,
+  "prompt": "deep bass hit, a myth busted, short impact",
+  "gain": -6
+ },
+ {
+  "sfx": "heavy",
+  "frame": 293,
+  "t": 9.767,
+  "prompt": "MRI scanner loud rhythmic knocking and humming",
+  "gain": -10,
+  "seconds": 3
+ },
+ {
+  "sfx": "ding",
+  "frame": 358,
+  "t": 11.933,
+  "prompt": "rapid sequence of soft electric sparkles, neurons lighting up one after another",
+  "gain": -8,
+  "seconds": 2
+ },
+ {
+  "sfx": "ding",
+  "frame": 447,
+  "t": 14.9,
+  "prompt": "gentle rhythmic electrical blips, calm brain activity",
+  "gain": -10,
+  "seconds": 4
+ },
+ {
+  "sfx": "whoosh",
+  "frame": 598,
+  "t": 19.933,
+  "prompt": "deep cinematic whoosh into an x-ray view",
+  "gain": -8
+ },
+ {
+  "sfx": "heavy",
+  "frame": 666,
+  "t": 22.2,
+  "prompt": "massive electric surge, crackling high voltage burst, rising",
+  "gain": -4,
+  "seconds": 2.5
+ },
+ {
+  "sfx": "crack",
+  "frame": 721,
+  "t": 24.033,
+  "prompt": "chaotic electrical static crackling, buzzing interference",
+  "gain": -6,
+  "seconds": 3
+ },
+ {
+  "sfx": "whoosh",
+  "frame": 798,
+  "t": 26.6,
+  "prompt": "sound fading out into muffled silence, low drone",
+  "gain": -6,
+  "seconds": 2
+ },
+ {
+  "sfx": "heavy",
+  "frame": 833,
+  "t": 27.767,
+  "prompt": "tense pulsing electrical storm, distorted crackle",
+  "gain": -6,
+  "seconds": 3
+ },
+ {
+  "sfx": "ding",
+  "frame": 943,
+  "t": 31.433,
+  "prompt": "hospital heart monitor beep",
+  "gain": -12
+ },
+ {
+  "sfx": "whoosh",
+  "frame": 1000,
+  "t": 33.333,
+  "prompt": "soothing soft whoosh, calming magical shimmer",
+  "gain": -8,
+  "seconds": 2
+ },
+ {
+  "sfx": "ding",
+  "frame": 1135,
+  "t": 37.833,
+  "prompt": "warm positive chime, resolved",
+  "gain": -8
+ }
+]
