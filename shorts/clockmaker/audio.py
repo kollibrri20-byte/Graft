@@ -58,6 +58,12 @@ def put(buf, x, at, gain=1.0, pan=0.0):
     buf[i:j] += x[: j - i] * gain
 
 
+def movavg(x, n):
+    c = np.cumsum(np.concatenate([np.zeros(n), x, np.zeros(n)]))
+    y = (c[n:] - c[:-n]) / n
+    return y[n // 2: n // 2 + len(x)]
+
+
 def db(x):
     return 10 ** (x / 20)
 
@@ -163,7 +169,7 @@ amb = np.zeros((N, 2))
 shop_on = np.zeros(N)
 for i in (1, 2, 5, 6, 7, 9, 10, 11, 12, 13, 14):
     shop_on[int(S[i] * SR):int(S[i + 1] * SR)] = 1
-shop_on = np.convolve(shop_on, np.ones(int(0.05 * SR)) / int(0.05 * SR), "same")
+shop_on = movavg(shop_on, int(0.05 * SR))
 ticks = [tick("small", k) for k in range(4)] + [tick("mid", 10 + k) for k in range(3)]
 tickbed = np.zeros((N, 2))
 for c in range(14):
@@ -189,7 +195,7 @@ amb += np.column_stack([cr, cr * 0.7]) * shop_on[:, None] * db(-34)
 town = np.zeros(N)
 for i in (0, 3, 4, 8, 15, 16, 17, 28, 29, 30, 31, 32, 33, 34):
     town[int(S[i] * SR):int(S[i + 1] * SR)] = 1
-town = np.convolve(town, np.ones(int(0.05 * SR)) / int(0.05 * SR), "same")
+town = movavg(town, int(0.05 * SR))
 wind = wind_layer(3)
 amb += wind * town[:, None] * db(-30)
 amb += wind_layer(4, 400, 2500) * env([(0, 0), (S[15], 0), (S[15] + 0.3, 1), (S[18], 1), (S[18] + 0.1, 0), (DUR, 0)])[:, None] * db(-30)
@@ -337,7 +343,7 @@ quiet = env([(0, 1), (S[25] - 0.05, 1), (S[25] + 0.05, 0.0), (TICK_T - 0.02, 0.0
 # silence after the hand reaches zero (shot 8)
 zero = env([(0, 1), (S[7] + 1.85, 1), (S[7] + 1.9, 0.05), (S[8] - 0.02, 0.05), (S[8], 1), (DUR, 1)])
 vol_env = np.abs(voice).max(1)
-duck = np.convolve(vol_env, np.ones(int(0.3 * SR)) / int(0.3 * SR), "same")
+duck = movavg(vol_env, int(0.3 * SR))
 duck = 1 - 0.45 * np.clip(duck * 6, 0, 1)
 mix = voice * db(-1) + (music * db(-13) * duck[:, None] + amb * duck[:, None] + sfx * db(-2)) * (quiet * zero)[:, None]
 # end fade

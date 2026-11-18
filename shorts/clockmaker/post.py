@@ -129,7 +129,7 @@ def main():
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-framerate", str(FPS), "-i", os.path.join(HERE, "frames", "f%05d.png"),
                     "-i", caps, "-loop", "1", "-framerate", str(FPS), "-t", str(DUR), "-i", sub, "-i", os.path.join(HERE, "mix.wav"),
                     "-filter_complex", vf, "-map", "[v]", "-map", "3:a", "-c:v", "libx264", "-preset", "slow", "-crf", "18",
-                    "-pix_fmt", "yuv420p", "-r", str(FPS), "-c:a", "aac", "-b:a", "256k", "-t", str(DUR), "-movflags", "+faststart", out],
+                    "-pix_fmt", "yuv420p", "-r", str(FPS), "-af", "loudnorm=I=-14:TP=-1.5:LRA=11", "-ar", "48000", "-c:a", "aac", "-b:a", "256k", "-t", str(DUR), "-movflags", "+faststart", out],
                    check=True)
     print("done", out, len(ch), "captions")
 
