@@ -47,25 +47,32 @@ R = random.Random(11)
 s3d.SOIL_LAYERS = [
     ("brown_mud_02", -0.8, 1.4, (0.85, 0.8, 0.75)),
     ("dry_ground_rocks", -2.6, 1.8, (0.95, 0.85, 0.75)),
-    ("sandstone_cracks", -5.0, 2.4, (1.0, 0.92, 0.80)),
-    ("quarry_wall", -99, 2.6, (1.0, 0.93, 0.82)),
+    ("sandstone_cracks", -5.0, 2.4, (0.92, 0.9, 0.86)),
+    ("quarry_wall", -99, 2.6, (1.45, 1.38, 1.22)),
 ]
 
 s3d.new_short(sky="belfast_sunset_puresky", sun_elev=34, sun_azim=-35)
 bpy.context.scene.frame_end = END
+if os.environ.get("FAST", "1") == "1":     # software GL in the cloud box: trade the expensive EEVEE extras for speed
+    _sc = bpy.context.scene
+    _sc.render.use_motion_blur = False
+    _sc.eevee.use_raytracing = False
+    _sc.eevee.taa_render_samples = int(os.environ.get("SAMPLES", "12"))
 sun = bpy.data.objects["Sun"]
 sun.data.color = (1.0, 0.86, 0.68)
 sun.data.energy = 4.0
 
 WIDTH = 40
-g = s3d.ground_section(width=WIDTH, depth=16.0, grass=False, stones=60, roots=10)
+g = s3d.ground_section(width=WIDTH, depth=28.0, grass=False, stones=60, roots=10)
 slab = bpy.data.objects[g["s3d_lawn"]]
 slab.data.materials.clear()
 slab.data.materials.append(s3d.tex("cobblestone_floor_05", tile=1.6, tint=(0.9, 0.86, 0.8), fallback=(0.4, 0.38, 0.36), name="Cobbles"))
 
 # ---------------------------------------------------------------- materials
 BONE = s3d.mat("Bone", (0.78, 0.70, 0.55), rough=0.62, noise=0.35, noise_scale=40)
-BONE_OLD = s3d.mat("BoneOld", (0.62, 0.54, 0.40), rough=0.7, noise=0.5, noise_scale=30)
+BONE_ROW = s3d.mat("BoneRow", (0.58, 0.50, 0.37), rough=0.7, noise=0.45, noise_scale=50)
+WALL_BACK = s3d.mat("WallBack", (0.035, 0.026, 0.018), rough=1.0)
+BONE_OLD = s3d.mat("BoneOld", (0.45, 0.38, 0.27), rough=0.8, noise=0.6, noise_scale=60)
 DARK = s3d.mat("Socket", (0.02, 0.015, 0.01), rough=1.0)
 WOOD = s3d.tex("weathered_brown_planks", tile=0.8, tint=(0.75, 0.6, 0.5), fallback=(0.3, 0.18, 0.1), name="CoffinWood")
 LIME = s3d.tex("white_sandstone_blocks_02", tile=2.2, tint=(1.05, 0.98, 0.88), fallback=(0.85, 0.8, 0.7), name="Facade")
@@ -187,8 +194,11 @@ def xf(loc, rz=0.0, rx=0.0, ry=0.0, s=1.0):
     return Matrix.Translation(loc) @ Matrix.Rotation(rz, 4, "Z") @ Matrix.Rotation(ry, 4, "Y") @ Matrix.Rotation(rx, 4, "X") @ Matrix.Scale(s, 4)
 
 
+BS = 1.7   # bones drawn 1.7x life size so they read on a phone
 SKULL = make_skull()
 FEMUR = make_femur()
+SKULL = (SKULL[0] * BS, SKULL[1], SKULL[2])
+FEMUR = (FEMUR[0] * BS, FEMUR[1], FEMUR[2])
 
 
 def bone_scatter(n, x0, x1, z0, z1, y0=0.15, y1=0.6, seed=0, skull_share=0.35, mats=(BONE, DARK)):
@@ -216,7 +226,7 @@ def heap(name, cx, cz, w, h, n, seed):
     for _ in range(n):
         x = r.uniform(-1, 1)
         top = h * (1 - x * x)
-        z = cz + 0.04 + r.random() ** 0.7 * max(0.02, top)
+        z = cz + 0.06 + r.random() * max(0.02, top)
         p = Vector((cx + x * w / 2, r.uniform(0.25, 2.6), z))
         if r.random() < 0.4:
             sk.append(xf(p, rz=r.uniform(-0.9, 0.9), rx=r.uniform(-0.6, 0.6), ry=r.uniform(-0.8, 0.8)))
@@ -226,7 +236,7 @@ def heap(name, cx, cz, w, h, n, seed):
     # a soft core so the heap never looks hollow
     bpy.ops.mesh.primitive_uv_sphere_add(segments=24, ring_count=12, radius=1, location=(cx, 1.4, cz))
     core = bpy.context.active_object
-    core.scale = (w / 2 * 0.95, 1.35, h * 0.8)
+    core.scale = (w / 2 * 0.9, 1.35, h * 0.75)
     core.data.materials.append(BONE_OLD)
     parts.append(core)
     return s3d.group(name, parts, origin="base")
@@ -244,20 +254,24 @@ def skull_wall(name, x0, x1, z0, z1, y=2.86, bands=(0.32, 0.72)):
         band_z = [z0 + b * hgt for b in bands] + [z1 - 0.09]
         z = z0 + 0.03
         while z < z1 - 0.16:
-            if any(abs(z - bz) < 0.1 for bz in band_z):
-                z += 0.05
+            if any(abs(z - bz) < 0.17 for bz in band_z):
+                z += 0.085
                 continue
-            xx = x + 0.04 + (0.03 if int(z * 20) % 2 else 0)
+            xx = x + 0.07 + (0.05 if int(z * 12) % 2 else 0)
             while xx < xe - 0.03:
-                fe.append(xf((xx, y - 0.02 + R.uniform(-0.02, 0.02), z + 0.024), rz=R.uniform(-0.15, 0.15), s=R.uniform(0.92, 1.05)))
-                xx += 0.085
-            z += 0.052
+                fe.append(xf((xx, y - 0.04 + R.uniform(-0.03, 0.03), z + 0.04), rz=R.uniform(-0.15, 0.15), s=R.uniform(0.92, 1.05)))
+                xx += 0.145
+            z += 0.088
         for bz in band_z:
-            xx = x + 0.09
-            while xx < xe - 0.07:
-                sk.append(xf((xx, y - 0.11, bz), rz=R.uniform(-0.18, 0.18), rx=R.uniform(-0.08, 0.12), s=R.uniform(0.95, 1.08)))
-                xx += 0.165
-        parts = [tile(FEMUR, (BONE, DARK), fe, f"{name}_fe"), tile(SKULL, (BONE, DARK), sk, f"{name}_sk")]
+            xx = x + 0.15
+            while xx < xe - 0.12:
+                sk.append(xf((xx, y - 0.19, bz), rz=R.uniform(-0.18, 0.18), rx=R.uniform(-0.08, 0.12), s=R.uniform(0.95, 1.08)))
+                xx += 0.28
+        parts = ([tile(FEMUR, (BONE_ROW, DARK), fe, f"{name}_fe")] if fe else []) + ([tile(SKULL, (BONE, DARK), sk, f"{name}_sk")] if sk else [])
+        if not parts:
+            x = xe
+            continue
+        parts.append(s3d.box(f"{name}_back", (xe - x, 0.04, z1 - z0), ((x + xe) / 2, y + 0.06, (z0 + z1) / 2), WALL_BACK, bevel=0))
         seg = s3d.group(f"{name}_{len(segs)}", parts, origin="base")
         segs.append(seg)
         x = xe
@@ -363,22 +377,27 @@ def haussmann(x, y, w, floors=6, seed=0, front_shops=True):
 
 def eiffel(x, y, H):
     """Simple lattice tower silhouette far down the avenue (exponential leg profile, three platforms)."""
-    zs = np.linspace(0, 0.93, 24)
+    zs = np.linspace(0, 0.93, 70)
     bm = bmesh.new()
     rings = []
     for z in zs:
-        hw = 0.19 * math.exp(-3.43 * z) * H if z > 0.02 else 0.19 * H
-        rings.append([bm.verts.new((sx * hw, sy * hw, z * H)) for sx, sy in ((-1, -1), (1, -1), (1, 1), (-1, 1))])
+        hw = 0.19 * math.exp(-3.43 * z) * H
+        pts = []
+        for sx, sy, dx, dy in ((-1, -1, 1, 0), (1, -1, 0, 1), (1, 1, -1, 0), (-1, 1, 0, -1)):
+            for k in range(4):
+                pts.append(bm.verts.new(((sx + dx * k / 2) * hw, (sy + dy * k / 2) * hw, z * H)))
+        rings.append(pts)
     for a, b in zip(rings, rings[1:]):
-        for k in range(4):
-            bm.faces.new((a[k], a[(k + 1) % 4], b[(k + 1) % 4], b[k]))
+        n = len(a)
+        for k in range(n):
+            bm.faces.new((a[k], a[(k + 1) % n], b[(k + 1) % n], b[k]))
     me = bpy.data.meshes.new("Tower")
     bm.to_mesh(me)
     bm.free()
     t = link(bpy.data.objects.new("Tower", me))
     t.location = (x, y, 0)
     wf = t.modifiers.new("Lattice", "WIREFRAME")
-    wf.thickness = H * 0.006
+    wf.thickness = H * 0.0028
     sub = s3d.mat("TowerIron", (0.22, 0.14, 0.09), rough=0.6, metal=0.5)
     t.data.materials.append(sub)
     parts = [t]
@@ -392,7 +411,7 @@ for i, (bx, w) in enumerate(((-21.0, 13.0), (-9.5, 10.5), (9.0, 10.0), (20.5, 13
     haussmann(bx, 6.0 + (i % 2) * 0.4, w, floors=6, seed=i)
 for i, (bx, w, yy) in enumerate(((-7.5, 8, 30), (7.5, 8, 30), (-7.5, 8, 52), (7.5, 8, 52))):  # the avenue receding
     haussmann(bx, yy, w, floors=5, seed=10 + i, front_shops=False)
-eiffel(1.0, 240.0, 150.0)
+eiffel(1.0, 330.0, 175.0)
 far = s3d.box("FarStreet", (60, 300, 0.1), (0, 150, s3d.TOP - 0.06), s3d.tex("asphalt_02", tile=4, fallback=(0.25, 0.25, 0.27), name="Asphalt"), bevel=0)
 pave = s3d.box("Pavement", (WIDTH, 4.0, 0.14), (0, 4.0, s3d.TOP + 0.04), s3d.tex("concrete_floor_02", tile=2, tint=(0.9, 0.88, 0.85), fallback=(0.6, 0.6, 0.6), name="Pavement"), bevel=0.02)
 for x in (-14.0, -3.2, 3.2, 14.0):          # wrought-iron street lamps
@@ -423,10 +442,10 @@ s3d.box("RailTop", (7.6, 0.05, 0.05), (CX, 3.4, 1.05), IRON, bevel=0)
 coffins, grave_bones = [], []
 for row, z in enumerate((-0.75, -1.35, -1.95, -2.55, -3.15)):
     for k, x in enumerate(np.linspace(CX - 2.7, CX + 2.4, 3)):
-        c = s3d.box("Coffin", (1.85, 0.62, 0.48), (x + R.uniform(-0.25, 0.25) + (0.4 if row % 2 else 0), 0.31, z + R.uniform(-0.05, 0.05)), WOOD, bevel=0.05)
+        c = s3d.box("Coffin", (1.85, 0.62, 0.48), (x + R.uniform(-0.25, 0.25) + (0.4 if row % 2 else 0), 0.26, z + R.uniform(-0.05, 0.05)), WOOD, bevel=0.05)
         c.rotation_euler.y = R.uniform(-0.08, 0.08)
         coffins.append((row, c))
-loose = bone_scatter(60, CX - 3.6, CX + 3.4, -3.4, -0.6, y0=0.06, y1=0.2, seed=3)
+loose = bone_scatter(45, CX - 3.6, CX + 3.4, -3.4, -0.6, y0=0.1, y1=0.2, seed=3)
 hide_stones_in(CX - 4, CX + 4, -3.6, -0.4, 1)
 
 # ---------------------------------------------------------------- the old quarry (centre) + bone heap
@@ -434,9 +453,9 @@ QX0, QX1, QZ0, QZ1 = -8.6, 2.6, -9.3, -6.8
 void("Quarry", QX0, QX1, QZ0, QZ1)
 hide_stones_in(QX0, QX1, QZ0, QZ1, 1)
 pillar = s3d.box("Pillar", (0.9, 0.9, QZ1 - QZ0), (-0.6, 2.2, (QZ0 + QZ1) / 2), s3d.tex("stacked_stone_wall", tile=0.9, tint=(1.0, 0.92, 0.8), fallback=(0.7, 0.64, 0.55), name="Masonry"), bevel=0.03)
-pile = heap("Heap", -3.6, QZ0, 5.6, 1.5, 420, seed=5)
-lamp((-6.5, 1.2, QZ1 - 0.35), 1, energy=40)
-lamp((0.8, 1.2, QZ1 - 0.35), 1, energy=40)
+pile = heap("Heap", -3.6, QZ0, 5.6, 1.6, 360, seed=5)
+lamp((-6.5, 1.2, QZ1 - 0.35), 1, energy=120)
+lamp((0.8, 1.2, QZ1 - 0.35), 1, energy=120)
 
 # ---------------------------------------------------------------- beat timing
 f_bones = W(B, 0, "кістки")
@@ -501,10 +520,12 @@ for k in range(26):
 for i in range(5):
     s3d.marker("crunch", f0 + 18 + i * int((f1 - f0) / 5), prompt="pile of dry old bones tumbling down a stone shaft and clattering, short")
 for i, (_, c) in enumerate(coffins):
+    c.scale = (1, 1, 1)          # a view_layer.update() re-evaluated the pop_in curve at frame 1 (scale 0)
     s3d.shrink_out(c, f_moved + i * 2, dur=8)
 for o in loose:
+    o.scale = (1, 1, 1)
     s3d.shrink_out(o, f_quarry, dur=10)
-pile.scale = (0.8, 1.0, 0.5)
+pile.scale = (0.85, 1.0, 0.7)
 s3d._key(pile, 1, scale=True)
 s3d._key(pile, f_moved, scale=True)
 pile.scale = (1.0, 1.0, 1.0)
@@ -527,7 +548,7 @@ for i, (x0, x1, z0, z1, fx, fs) in enumerate(tunnels):
     span = x1 - x0
     for k, x in enumerate(np.arange(x0 + 1.5, x1 - 0.5, 4.5)):
         t = abs(x - fx) / max(1, span)
-        lamp((float(x), 1.2, z1 - 0.3), fs + 4 + int(20 * t), energy=35)
+        lamp((float(x), 1.2, z1 - 0.3), fs + 4 + int(20 * t), energy=110)
 for x, z0, z1 in ((4.6, -7.3, -5.3), (-12.5, -7.3, -5.3)):   # stair shafts linking the two levels
     c = void(f"Link{x}", x - 0.6, x + 0.6, z0 - 0.05, z1 + 0.05, back=2.2)
     s3d._key(c, f_tun + 6, scale=True)
@@ -552,6 +573,18 @@ for k, seg in enumerate(walls):
 s3d.marker("crunch", f_walls - 6, prompt="many dry skulls and bones being stacked against a stone wall, hollow clatter, short", gain=-1)
 s3d.marker("thud", f_skulls + 6, prompt="low ominous cinematic hit with a cold echo in a stone crypt", gain=-2)
 
+# ---------------------------------------------------------------- speed: cheap booleans, shadowless fill lamps
+if os.environ.get("FAST", "1") == "1":
+    for o in bpy.context.scene.objects:
+        for m in getattr(o, "modifiers", []):
+            if m.type == "BOOLEAN" and o.name.startswith("Ground"):
+                try:
+                    m.solver = "FAST"
+                except TypeError:
+                    m.solver = "FLOAT"
+        if o.type == "LIGHT" and o.data.type == "POINT":
+            o.data.use_shadow = False
+
 # ---------------------------------------------------------------- camera
 cam = s3d.camera_cutaway(target=(0.0, 0, 5.0), dist=17, lens=32)
 cam.data.clip_end = 1000
@@ -560,10 +593,29 @@ s3d.cam_drift(cam, f_bones + 26, f_cem - 26, amount=0.6)
 s3d.cam_move(cam, f_cem + 6, target=(-8.6, 0, -1.4), dist=10.5, dur=26)
 s3d.cam_move(cam, f_moved + 18, target=(-5.6, 0, -4.6), dist=13.5, dur=30)
 s3d.cam_move(cam, f_tun + 12, target=(0.5, 0, -5.0), dist=21, dur=34)
-s3d.cam_move(cam, f_skulls + 4, target=(FOCUS[0], 0, FOCUS[1] + 0.2), dist=4.2, height=0.15, dur=36)
+s3d.cam_move(cam, f_skulls + 4, target=(FOCUS[0], 2.6, FOCUS[1] + 0.4), dist=3.7, height=-0.3, dur=36)
 s3d.cam_drift(cam, f_skulls + 4, END, amount=0.5)
 
 # ---------------------------------------------------------------- output
+if MODE == "debug":
+    sc = bpy.context.scene
+    print("DBG f_cem", f_cem, "f_over", f_over, "f_moved", f_moved)
+    for f in (f_cem, 243):
+        sc.frame_set(f)
+        for _, c in coffins[:3]:
+            print("DBG", f, c.name, tuple(round(v, 2) for v in c.matrix_world.translation), tuple(round(v, 2) for v in c.scale), c.hide_render)
+    raise SystemExit
+if MODE.startswith("frames:"):          # frames:<start>:<end> -> PNG sequence (parallel chunks on a CPU box)
+    a_, b_ = map(int, MODE.split(":")[1:3])
+    sc = bpy.context.scene
+    sc.frame_start, sc.frame_end = a_, b_
+    sc.render.resolution_percentage = int(os.environ.get("SCALE", "67"))
+    sc.render.image_settings.file_format = "PNG"
+    sc.render.filepath = os.path.join(WORK, "frames", "f")
+    s3d.export_markers(os.path.join(WORK, "render.sfx.json"))
+    s3d.qa_gate()
+    bpy.ops.render.render(animation=True)
+    raise SystemExit
 if MODE == "preview":
     os.makedirs(os.path.join(WORK, "preview"), exist_ok=True)
     keys = [10, f_bones + 30, f_mil + 8, f_over + 10, f_moved + 30, f_quarry + 10, f_tun + 16, f_walls + 10, END - 5]
@@ -571,7 +623,12 @@ if MODE == "preview":
     for f in keys:
         s3d.preview_still(os.path.join(WORK, "preview", f"f{f:04d}.png"), frame=f, scale=30, samples=8)
 elif MODE.startswith("still:"):
-    f = int(MODE.split(":")[1])
-    s3d.preview_still(os.path.join(WORK, "preview", f"s{f:04d}.png"), frame=f, scale=50, samples=16)
+    os.makedirs(os.path.join(WORK, "preview"), exist_ok=True)
+    import time
+    sc_ = int(os.environ.get("STILL_SCALE", "30")); sm_ = int(os.environ.get("STILL_SAMPLES", "8"))
+    for f in map(int, MODE.split(":")[1].split(",")):
+        t0 = time.time()
+        s3d.preview_still(os.path.join(WORK, "preview", f"s{f:04d}.png"), frame=f, scale=sc_, samples=sm_)
+        print(f"TIME frame {f}: {time.time() - t0:.1f}s")
 else:
     s3d.render_mp4(os.path.join(WORK, "render.mp4"), scale=100 if MODE == "full" else 50)

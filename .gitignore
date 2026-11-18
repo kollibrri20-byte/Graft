@@ -6,3 +6,5 @@ shorts/*/*.wav
 shorts/*/*.mp4
 shorts/*/*.mp3
 shorts/*/sfx/
+shorts/*/frames/
+shorts/*/logs/
