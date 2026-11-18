@@ -1,98 +1,104 @@
 [
  {
   "sfx": "tap",
-  "frame": 386,
-  "t": 16.083,
+  "frame": 432,
+  "t": 18.0,
   "prompt": "phone tap"
  },
  {
   "sfx": "buzz",
-  "frame": 422,
-  "t": 17.583,
+  "frame": 471,
+  "t": 19.625,
   "prompt": "phone buzz"
  },
  {
   "sfx": "buzz",
-  "frame": 438,
-  "t": 18.25,
+  "frame": 487,
+  "t": 20.292,
   "prompt": "phone buzz"
  },
  {
   "sfx": "hit",
-  "frame": 666,
-  "t": 27.75,
+  "frame": 745,
+  "t": 31.042,
   "prompt": "low hit"
  },
  {
   "sfx": "step",
-  "frame": 875,
-  "t": 36.458,
+  "frame": 979,
+  "t": 40.792,
+  "gain": -6
+ },
+ {
+  "sfx": "step",
+  "frame": 1007,
+  "t": 41.958,
   "gain": -6
  },
  {
   "sfx": "lock",
-  "frame": 926,
-  "t": 38.583,
+  "frame": 1037,
+  "t": 43.208,
   "prompt": "deadbolt lock click"
  },
  {
   "sfx": "lock",
-  "frame": 930,
-  "t": 38.75,
+  "frame": 1041,
+  "t": 43.375,
   "prompt": "deadbolt lock click"
  },
  {
   "sfx": "place",
-  "frame": 1036,
-  "t": 43.167,
+  "frame": 1160,
+  "t": 48.333,
   "prompt": "plastic camcorder set down on wood"
  },
  {
   "sfx": "beep",
-  "frame": 1065,
-  "t": 44.375,
+  "frame": 1192,
+  "t": 49.667,
   "prompt": "camcorder record beep"
  },
  {
   "sfx": "sheets",
-  "frame": 1214,
-  "t": 50.583,
+  "frame": 1360,
+  "t": 56.667,
   "prompt": "bed sheets rustle"
  },
  {
   "sfx": "creak",
-  "frame": 1292,
-  "t": 53.833,
+  "frame": 1445,
+  "t": 60.208,
   "prompt": "old bed creak"
  },
  {
   "sfx": "camstart",
-  "frame": 1337,
-  "t": 55.708,
+  "frame": 1497,
+  "t": 62.375,
   "prompt": "phone camera start sound"
  },
  {
   "sfx": "hit",
-  "frame": 1417,
-  "t": 59.042,
+  "frame": 1587,
+  "t": 66.125,
   "prompt": "deep boom"
  },
  {
   "sfx": "sting",
-  "frame": 1711,
-  "t": 71.292,
+  "frame": 1916,
+  "t": 79.833,
   "prompt": "creepy string sting"
  },
  {
   "sfx": "hit",
-  "frame": 2152,
-  "t": 89.667,
+  "frame": 2411,
+  "t": 100.458,
   "prompt": "low boom"
  },
  {
   "sfx": "sting2",
-  "frame": 2523,
-  "t": 105.125,
+  "frame": 2825,
+  "t": 117.708,
   "prompt": "horror sting eyes open"
  }
 ]

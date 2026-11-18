@@ -1,6 +1,6 @@
 {
  "fps": 24,
- "end": 2581,
+ "end": 2885,
  "res": [
   540,
   960
@@ -11,245 +11,245 @@
    "f0": 3,
    "fx": "clean",
    "mode": "morning",
-   "f1": 90
+   "f1": 102
   },
   {
    "name": "m_face",
-   "f0": 91,
+   "f0": 103,
    "fx": "clean",
    "mode": "morning",
-   "f1": 138
+   "f1": 155
   },
   {
    "name": "p_door",
-   "f0": 139,
+   "f0": 156,
    "fx": "phone",
    "mode": "phone",
    "timer": 0,
-   "f1": 317
+   "f1": 355
   },
   {
    "name": "m_ots",
-   "f0": 318,
+   "f0": 356,
    "fx": "clean",
    "mode": "morning",
-   "f1": 411
+   "f1": 460
   },
   {
    "name": "m_ns",
-   "f0": 412,
+   "f0": 461,
    "fx": "clean",
    "mode": "morning",
-   "f1": 467
+   "f1": 523
   },
   {
    "name": "p_mid",
-   "f0": 468,
+   "f0": 524,
    "fx": "phone",
    "mode": "phone",
    "timer": 0,
-   "f1": 522
+   "f1": 584
   },
   {
    "name": "p_bed",
-   "f0": 523,
+   "f0": 585,
    "fx": "phone",
    "mode": "phone",
    "timer": 0,
-   "f1": 558
+   "f1": 625
   },
   {
    "name": "p_face",
-   "f0": 559,
+   "f0": 626,
    "fx": "phone",
    "mode": "phone",
    "timer": 0,
-   "f1": 747
+   "f1": 836
   },
   {
    "name": "p_face2",
-   "f0": 748,
+   "f0": 837,
    "fx": "phone",
    "mode": "phone",
    "timer": 21,
-   "f1": 872
+   "f1": 976
   },
   {
    "name": "e_wide",
-   "f0": 873,
+   "f0": 977,
    "fx": "clean",
    "mode": "evening",
-   "f1": 898
+   "f1": 1006
   },
   {
    "name": "e_locks",
-   "f0": 899,
+   "f0": 1007,
    "fx": "clean",
    "mode": "evening",
-   "f1": 938
+   "f1": 1051
   },
   {
    "name": "e_door",
-   "f0": 939,
+   "f0": 1052,
    "fx": "clean",
    "mode": "evening",
-   "f1": 975
+   "f1": 1092
   },
   {
    "name": "n_ward",
-   "f0": 976,
+   "f0": 1093,
    "fx": "clean",
    "mode": "evening",
-   "f1": 1053
+   "f1": 1179
   },
   {
    "name": "n_cc",
-   "f0": 1054,
+   "f0": 1180,
    "fx": "clean",
    "mode": "evening",
-   "f1": 1138
+   "f1": 1274
   },
   {
    "name": "c_rew",
-   "f0": 1139,
+   "f0": 1275,
    "fx": "rew",
    "mode": "cam",
-   "f1": 1205
+   "f1": 1349
   },
   {
    "name": "c_wide",
-   "f0": 1206,
+   "f0": 1350,
    "fx": "cam",
    "mode": "cam",
    "clock": 10802,
-   "f1": 1243
+   "f1": 1392
   },
   {
    "name": "c_eyes",
-   "f0": 1244,
+   "f0": 1393,
    "fx": "cam",
    "mode": "cam",
    "clock": 10809,
-   "f1": 1273
+   "f1": 1426
   },
   {
    "name": "c_wide2",
-   "f0": 1274,
+   "f0": 1427,
    "fx": "cam",
    "mode": "cam",
    "clock": 10812,
-   "f1": 1414
+   "f1": 1584
   },
   {
    "name": "c_bed",
-   "f0": 1415,
+   "f0": 1585,
    "fx": "cam",
    "mode": "cam",
    "clock": 10831,
-   "f1": 1470
+   "f1": 1647
   },
   {
    "name": "c_wide3",
-   "f0": 1471,
+   "f0": 1648,
    "fx": "cam",
    "mode": "cam",
    "clock": 10835,
-   "f1": 1588
+   "f1": 1778
   },
   {
    "name": "c_med",
-   "f0": 1589,
+   "f0": 1779,
    "fx": "cam",
    "mode": "cam",
    "clock": 10842,
-   "f1": 1671
+   "f1": 1871
   },
   {
    "name": "c_close",
-   "f0": 1672,
+   "f0": 1872,
    "fx": "cam",
    "mode": "cam",
    "clock": 10847,
-   "f1": 1761
+   "f1": 1973
   },
   {
    "name": "c_xclose",
-   "f0": 1762,
+   "f0": 1974,
    "fx": "glitch",
    "mode": "cam",
    "clock": 10853,
-   "f1": 1906
+   "f1": 2135
   },
   {
    "name": "l_front",
-   "f0": 1907,
+   "f0": 2136,
    "fx": "clean",
    "mode": "laptop",
-   "f1": 1956
+   "f1": 2190
   },
   {
    "name": "l_hands",
-   "f0": 1957,
+   "f0": 2191,
    "fx": "clean",
    "mode": "laptop",
-   "f1": 1989
+   "f1": 2228
   },
   {
    "name": "l_face",
-   "f0": 1990,
+   "f0": 2229,
    "fx": "clean",
    "mode": "laptop",
-   "f1": 2151
+   "f1": 2410
   },
   {
    "name": "l_bed",
-   "f0": 2152,
+   "f0": 2411,
    "fx": "clean",
    "mode": "laptop",
-   "f1": 2182
+   "f1": 2444
   },
   {
    "name": "f_low",
-   "f0": 2183,
+   "f0": 2445,
    "fx": "flash",
    "mode": "dawn",
-   "f1": 2245
+   "f1": 2514
   },
   {
    "name": "f_hand",
-   "f0": 2246,
+   "f0": 2515,
    "fx": "flash",
    "mode": "dawn",
-   "f1": 2289
+   "f1": 2564
   },
   {
    "name": "h_door",
-   "f0": 2290,
+   "f0": 2565,
    "fx": "clean",
    "mode": "hall",
-   "f1": 2395
+   "f1": 2683
   },
   {
    "name": "s_selfie",
-   "f0": 2396,
+   "f0": 2684,
    "fx": "selfie",
    "mode": "hall",
    "timer": 0,
-   "f1": 2481
+   "f1": 2779
   },
   {
    "name": "a_face",
-   "f0": 2482,
+   "f0": 2780,
    "fx": "clean",
    "mode": "night",
-   "f1": 2542
+   "f1": 2844
   },
   {
    "name": "black",
-   "f0": 2543,
+   "f0": 2845,
    "fx": "black",
    "mode": "night",
-   "f1": 2581
+   "f1": 2885
   }
  ]
 }
