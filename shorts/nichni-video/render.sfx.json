@@ -1,0 +1,104 @@
+[
+ {
+  "sfx": "tap",
+  "frame": 557,
+  "t": 23.208,
+  "prompt": "phone tap"
+ },
+ {
+  "sfx": "buzz",
+  "frame": 598,
+  "t": 24.917,
+  "prompt": "phone buzz"
+ },
+ {
+  "sfx": "buzz",
+  "frame": 614,
+  "t": 25.583,
+  "prompt": "phone buzz"
+ },
+ {
+  "sfx": "hit",
+  "frame": 931,
+  "t": 38.792,
+  "prompt": "low hit"
+ },
+ {
+  "sfx": "step",
+  "frame": 1198,
+  "t": 49.917,
+  "gain": -6
+ },
+ {
+  "sfx": "step",
+  "frame": 1226,
+  "t": 51.083,
+  "gain": -6
+ },
+ {
+  "sfx": "lock",
+  "frame": 1269,
+  "t": 52.875,
+  "prompt": "deadbolt lock click"
+ },
+ {
+  "sfx": "lock",
+  "frame": 1276,
+  "t": 53.167,
+  "prompt": "deadbolt lock click"
+ },
+ {
+  "sfx": "place",
+  "frame": 1425,
+  "t": 59.375,
+  "prompt": "plastic camcorder set down on wood"
+ },
+ {
+  "sfx": "beep",
+  "frame": 1460,
+  "t": 60.833,
+  "prompt": "camcorder record beep"
+ },
+ {
+  "sfx": "sheets",
+  "frame": 1682,
+  "t": 70.083,
+  "prompt": "bed sheets rustle"
+ },
+ {
+  "sfx": "creak",
+  "frame": 1784,
+  "t": 74.333,
+  "prompt": "old bed creak"
+ },
+ {
+  "sfx": "camstart",
+  "frame": 1840,
+  "t": 76.667,
+  "prompt": "phone camera start sound"
+ },
+ {
+  "sfx": "hit",
+  "frame": 1966,
+  "t": 81.917,
+  "prompt": "deep boom"
+ },
+ {
+  "sfx": "sting",
+  "frame": 2328,
+  "t": 97.0,
+  "prompt": "creepy string sting"
+ },
+ {
+  "sfx": "hit",
+  "frame": 2957,
+  "t": 123.208,
+  "prompt": "low boom"
+ },
+ {
+  "sfx": "sting2",
+  "frame": 3492,
+  "t": 145.5,
+  "prompt": "horror sting eyes open"
+ }
+]
