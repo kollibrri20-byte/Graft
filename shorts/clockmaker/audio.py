@@ -99,8 +99,14 @@ for l in L:
     edges = np.concatenate([[0], np.cumsum(lens)]) / lens.sum() * dur
     for k, w in enumerate(ws):
         words.append({"w": w.strip(",.:;—"), "raw": w, "s": round(l["at"] + edges[k], 3), "e": round(l["at"] + edges[k + 1], 3), "line": l["i"]})
-json.dump(words, open(os.path.join(HERE, "words.json"), "w"), ensure_ascii=False, indent=0)
+if not os.path.exists(os.path.join(HERE, "voice.wav")):
+    json.dump(words, open(os.path.join(HERE, "words.json"), "w"), ensure_ascii=False, indent=0)
 voice = band(voice, 70, None, 2) * 1.0
+if os.path.exists(os.path.join(HERE, "voice.wav")):  # offline narration already placed on the timeline
+    words = json.load(open(os.path.join(HERE, "words.json")))
+    v = load(os.path.join(HERE, "voice.wav"))
+    voice = np.zeros((N, 2))
+    voice[: min(N, len(v))] = v[:N]
 
 # ------------------------------------------------------------------ procedural sounds
 def tick(kind="small", seed=0):
