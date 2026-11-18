@@ -1,0 +1,10 @@
+frames/
+preview/
+post_tmp/
+logs/
+tex/
+__pycache__/
+sfx/*.wav
+mix.wav
+*.blend
+final*.mp4
