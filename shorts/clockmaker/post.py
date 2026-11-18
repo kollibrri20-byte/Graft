@@ -125,7 +125,13 @@ def main():
     shutil.rmtree(odd, ignore_errors=True)
     os.makedirs(odd)
     for k, f in enumerate(range(1, int(DUR * FPS) + 1, 2)):
-        os.symlink(os.path.join(HERE, "frames", f"f{f:05d}.png"), os.path.join(odd, f"o{k + 1:05d}.png"))
+        src = os.path.join(HERE, "frames", f"f{f:05d}.png")
+        dst = os.path.join(odd, f"o{k + 1:05d}.png")
+        im = Image.open(src)
+        if im.size != (432, 768):
+            im.convert("RGB").resize((432, 768), Image.LANCZOS).save(dst)
+        else:
+            os.symlink(src, dst)
     vf = (f"[0:v]minterpolate=fps=24:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1:scd=fdiff,format=yuv444p,geq=lum='lum(X,Y)*({env})':cb='128+(cb(X,Y)-128)*({env})':cr='128+(cr(X,Y)-128)*({env})',"
           f"scale={W}:{H}:flags=lanczos,unsharp=5:5:0.6,vignette=angle=0.3,format=yuv420p[v0];"
           f"[v0][1:v]overlay=format=auto[v1];"
