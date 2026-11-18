@@ -1,0 +1,128 @@
+[
+ {
+  "sfx": "ambience",
+  "frame": 1,
+  "t": 0.042,
+  "prompt": "humid tropical rainforest ambience, insects buzzing, distant exotic birds",
+  "gain": -8,
+  "seconds": 22
+ },
+ {
+  "sfx": "skitter",
+  "frame": 129,
+  "t": 5.375,
+  "prompt": "tiny insect legs skittering on dry leaves, ants marching",
+  "gain": -4,
+  "seconds": 4
+ },
+ {
+  "sfx": "spore_land",
+  "frame": 234,
+  "t": 9.75,
+  "prompt": "tiny soft magical pop, a dust speck landing",
+  "seconds": 1.0
+ },
+ {
+  "sfx": "whoosh",
+  "frame": 242,
+  "t": 10.083,
+  "prompt": "deep cinematic whoosh into darkness, x-ray transition",
+  "seconds": 1.2
+ },
+ {
+  "sfx": "sprout",
+  "frame": 253,
+  "t": 10.542,
+  "prompt": "wet organic creaking, tiny tendril pushing through a shell",
+  "seconds": 2.5
+ },
+ {
+  "sfx": "whoosh",
+  "frame": 341,
+  "t": 14.208,
+  "prompt": "deep cinematic whoosh, x-ray transition",
+  "gain": -4,
+  "seconds": 1.2
+ },
+ {
+  "sfx": "spread",
+  "frame": 350,
+  "t": 14.583,
+  "prompt": "eerie squelching fungal growth spreading, organic crackle",
+  "seconds": 4
+ },
+ {
+  "sfx": "twitch",
+  "frame": 444,
+  "t": 18.5,
+  "prompt": "insect body twitching, dry clicking spasm",
+  "seconds": 1.2
+ },
+ {
+  "sfx": "ambience2",
+  "frame": 470,
+  "t": 19.583,
+  "prompt": "humid tropical rainforest ambience, cicadas, dripping water",
+  "gain": -8,
+  "seconds": 22
+ },
+ {
+  "sfx": "whoosh",
+  "frame": 470,
+  "t": 19.583,
+  "prompt": "short whoosh transition",
+  "gain": -6,
+  "seconds": 1.0
+ },
+ {
+  "sfx": "hit",
+  "frame": 483,
+  "t": 20.125,
+  "prompt": "ominous low cinematic hit, dark drone swell",
+  "seconds": 2.5
+ },
+ {
+  "sfx": "skitter2",
+  "frame": 572,
+  "t": 23.833,
+  "prompt": "tiny insect legs climbing a plant stem, scratchy",
+  "gain": -4,
+  "seconds": 3
+ },
+ {
+  "sfx": "bite",
+  "frame": 715,
+  "t": 29.792,
+  "prompt": "sharp crunchy bite into a leaf, tiny mandibles snapping shut",
+  "seconds": 1.0
+ },
+ {
+  "sfx": "death",
+  "frame": 834,
+  "t": 34.75,
+  "prompt": "faint eerie low tone fading out, last breath",
+  "gain": -3,
+  "seconds": 2.5
+ },
+ {
+  "sfx": "grow",
+  "frame": 901,
+  "t": 37.542,
+  "prompt": "slow creepy organic stretching growth, creaking fungus sprouting",
+  "seconds": 3.5
+ },
+ {
+  "sfx": "spores",
+  "frame": 975,
+  "t": 40.625,
+  "prompt": "soft puff of dust, sparkling spores drifting down, magical shimmer",
+  "seconds": 3
+ },
+ {
+  "sfx": "stone",
+  "frame": 1060,
+  "t": 44.167,
+  "prompt": "heavy stone slab set down, dusty thud, deep cinematic boom",
+  "seconds": 2.5
+ }
+]

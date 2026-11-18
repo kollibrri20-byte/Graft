@@ -1,0 +1,8 @@
+frames_*/
+preview/
+*.blend
+*.blend1
+*.log
+insp*.jpg
+voice_raw.wav
+render_half.mp4
