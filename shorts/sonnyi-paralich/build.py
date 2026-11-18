@@ -543,8 +543,8 @@ dem.pose_at(1, "perch")
 light("PaintIn", "AREA", PC + Vector((-0.4, 0.5, 0.65)), 90, 0.8, (1.0, 0.8, 0.6), aim=WH)
 light("PaintKey", "SPOT", PC + Vector((0.8, -0.3, 1.4)), 600, 0.2, (1.0, 0.85, 0.65), aim=WH, spot=55)
 light("GalSpot", "SPOT", PC + Vector((0, -1.6, 2.6)), 700, 0.3, (1.0, 0.9, 0.75), aim=PC, spot=42)
-plaque = s3d.label("Генрі Фюзелі · «Нічний кошмар»", loc=PC + Vector((0, -0.05, -PH / 2 - 0.3)), size=0.09)
-yr = s3d.label("1781", loc=PC + Vector((0, -0.25, PH / 2 + 0.35)), size=0.22)
+plaque = s3d.label("Генрі Фюзелі · «Нічний кошмар»", loc=PC + Vector((0, -0.25, PH / 2 + 0.13)), size=0.08)
+yr = s3d.label("1781", loc=PC + Vector((0, -0.25, PH / 2 + 0.36)), size=0.2)
 s3d.pop_in(yr, W(7, "1781"), dur=8, sfx="pop")
 s3d.pop_in(plaque, W(7, "Фюзелі"), dur=8, sfx=None)
 s3d.marker("brush", W(7, "намалював"), prompt="soft oil paint brush strokes on canvas", gain=-8)
@@ -601,7 +601,7 @@ D0, D1, D2 = [c + Vector((0, 1.1, 0.75)) for c in DIO]
 shot("CamCult", BS(6), [(BS(6), D0, (0.25, -2.9, 0.9)), (W(6, "Канаді", -14), D0, (0.2, -2.6, 0.8)), (W(6, "Канаді", -2), D1, (0.2, -2.6, 0.8)),
                         (W(6, "нас", -14), D1, (0.15, -2.4, 0.8)), (W(6, "нас", -2), D2, (0.15, -2.6, 0.8)), (W(6, "домовик", 6), D2, (0.1, -2.3, 0.7)),
                         (BS(7) - 1, CU + Vector((0, 1.1, 0.9)), (0, -6.8, 1.6))], lens=35, fstop=5.6)
-shot("CamPainting", BS(7), [(BS(7), PC + Vector((0, 0, 0.2)), (0.0, -5.2, 0.2)), (BS(8), PC, (0.0, -3.4, 0.1))], lens=40, fstop=5.6)
+shot("CamPainting", BS(7), [(BS(7), PC + Vector((0, 0, 0.2)), (0.0, -5.2, 0.2)), (BS(8), PC + Vector((0, 0, 0.1)), (0.0, -3.8, 0.1))], lens=40, fstop=5.6)
 shot("CamCrowd", BS(8), [(BS(8), CR + Vector((0, 1.6, 1.3)), (0, -6.2, 1.2)), (f_one, CR + Vector((0, 1.6, 1.35)), (0, -5.6, 1.1)),
                          (BS(9), ONE.arm.location + Vector((0, 0, 1.4)), (0, -3.8, 0.6))], lens=35, fstop=5.6)
 shot("CamDawn", BS(9), [(BS(9), (0.2, 2.9, 0.9), (0.6, -2.8, 1.5)), (END, (0.25, 2.9, 0.95), (0.5, -2.2, 1.25))], lens=30, fstop=5.6)
