@@ -1304,6 +1304,7 @@ def main():
     if RANGE:
         a, b = RANGE.split(":")
         sc.frame_start, sc.frame_end = int(a), int(b)
+    sc.frame_step = int(os.environ.get("STEP", "1"))
     bpy.ops.render.render(animation=True)
 
 
