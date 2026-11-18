@@ -6,6 +6,7 @@ its slot in the timing the animation was rendered to (words_rhvoice.json), so no
 import json, os, subprocess, sys, tempfile, wave
 import numpy as np
 P = sys.argv[1]
+WAVS = os.environ.get("WAVS")       # e.g. /path/oleksa_ -> use neural takes <WAVS><i>.wav instead of RHVoice
 SR = 44100
 plain = [l.strip() for l in open(os.path.join(P, "script.txt"), encoding="utf-8") if l.strip()]
 ssml = [l.strip() for l in open(os.path.join(P, "script_ssml.txt"), encoding="utf-8") if l.strip()]
@@ -18,14 +19,18 @@ CHAIN = ("highpass=f=70,rubberband=pitch=0.95:formant=preserved,"
          "equalizer=f=140:t=q:w=1:g=3,equalizer=f=320:t=q:w=1.2:g=-2,equalizer=f=3200:t=q:w=1.5:g=2.5,"
          "equalizer=f=7500:t=q:w=2:g=-3,acompressor=threshold=0.12:ratio=2.5:attack=8:release=120:makeup=1.5,"
          "aecho=0.85:0.5:38|71:0.16|0.09")
+CHAIN_N = CHAIN.replace("rubberband=pitch=0.95:formant=preserved,", "").replace("aecho=0.85:0.5:38|71:0.16|0.09", "aecho=0.88:0.5:38|71:0.12|0.07")
 nxt = [s for s, _ in spans[1:]] + [old[-1]["e"] + 2.0]
 y = np.zeros(int((old[-1]["e"] + 3) * SR), np.float32)
 words = []
 for i, (line, sm, (t0, t1), tn) in enumerate(zip(plain, ssml, spans, nxt)):
-    w_ = os.path.join(tmp, f"{i}.wav")
-    subprocess.run(["RHVoice-test", "-s", "-p", "volodymyr", "-R", "24000", "-o", w_],
-                   input=f"<speak>{sm}</speak>".encode(), check=True)
-    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", w_, "-af", CHAIN, "-ac", "1", "-ar", str(SR), "-f", "f32le", "-"],
+    if WAVS:
+        w_ = f"{WAVS}{i}.wav"
+    else:
+        w_ = os.path.join(tmp, f"{i}.wav")
+        subprocess.run(["RHVoice-test", "-s", "-p", "volodymyr", "-R", "24000", "-o", w_],
+                       input=f"<speak>{sm}</speak>".encode(), check=True)
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", w_, "-af", CHAIN_N if WAVS else CHAIN, "-ac", "1", "-ar", str(SR), "-f", "f32le", "-"],
                          capture_output=True, check=True).stdout
     z = np.frombuffer(raw, np.float32).copy()
     on = np.nonzero(np.abs(z) > 0.01)[0]
