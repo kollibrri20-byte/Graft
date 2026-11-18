@@ -1,0 +1,6 @@
+#!/bin/bash
+# Shim: run a build script with Blender-as-a-Python-module (bpy from PyPI), same CLI as `blender --background --python X -- args`
+PY=/tmp/claude-0/-home-user-Graft/e8696b3f-0189-5687-b451-80bce9629ced/scratchpad/bl/bin/python
+script=""; rest=()
+while [ $# -gt 0 ]; do case "$1" in --background|-b) shift;; --python) script="$2"; shift 2;; --version) $PY -c "import bpy;print('Blender',bpy.app.version_string)"; exit;; --) rest=("$@"); break;; *) shift;; esac; done
+exec $PY -c 'import sys,runpy,bpy; s=sys.argv[1]; sys.argv=["blender","--background","--python",s]+sys.argv[2:]; runpy.run_path(s, run_name="__main__")' "$script" "${rest[@]}"

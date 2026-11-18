@@ -1,3 +1,8 @@
 out/
 __pycache__/
 out3d/
+shorts/*/preview/
+shorts/*/*.wav
+shorts/*/*.mp4
+shorts/*/*.mp3
+shorts/*/sfx/
