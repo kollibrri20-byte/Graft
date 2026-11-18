@@ -574,7 +574,7 @@ for (a, b) in BRAIN_RANGES:
             s_[1] = f + dur + 2
 
 # ---------------------------------------------------------------- the room: the guy walks in, wonders, shakes, collapses, recovers
-guy.place(1, R + Vector((1.3, 0.8, 0)), -90)
+guy.place(1, R + Vector((0.85, 0.8, 0)), -90)
 guy.walk(2, 44, to=(R.x + 0.0, R.y + 1.0), face_end=0, step=16)
 guy.pose_at(50, "think")
 guy.hold(51, W(0, "запрацює") - 4)
