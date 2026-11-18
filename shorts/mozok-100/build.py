@@ -755,5 +755,18 @@ if MODE == "preview":
     for fr in frames:
         s3d.preview_still(os.path.join(out, f"f{fr:04d}.png"), frame=fr, scale=int(os.environ.get("SCALE", "30")))
     s3d.export_markers(os.path.join(WORK, "render.sfx.json"))
+elif MODE == "frames":
+    # resumable: one JPEG per frame, frames already on disk are skipped (survives restarts)
+    s3d.qa_gate()
+    s3d.export_markers(os.path.join(WORK, "render.sfx.json"))
+    r = sc.render
+    r.resolution_percentage = int(os.environ.get("SCALE", "40"))
+    r.image_settings.file_format = "JPEG"
+    r.image_settings.quality = 95
+    r.use_overwrite = False
+    r.use_placeholder = True
+    r.filepath = os.path.join(WORK, "frames", "f")
+    os.makedirs(os.path.join(WORK, "frames"), exist_ok=True)
+    bpy.ops.render.render(animation=True)
 else:
     s3d.render_mp4(os.path.join(WORK, "render.mp4"), scale=int(os.environ.get("SCALE", "50" if MODE == "half" else "100")))
