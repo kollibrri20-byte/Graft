@@ -1,104 +1,104 @@
 [
  {
   "sfx": "tap",
-  "frame": 557,
-  "t": 23.208,
+  "frame": 432,
+  "t": 18.0,
   "prompt": "phone tap"
  },
  {
   "sfx": "buzz",
-  "frame": 598,
-  "t": 24.917,
+  "frame": 471,
+  "t": 19.625,
   "prompt": "phone buzz"
  },
  {
   "sfx": "buzz",
-  "frame": 614,
-  "t": 25.583,
+  "frame": 487,
+  "t": 20.292,
   "prompt": "phone buzz"
  },
  {
   "sfx": "hit",
-  "frame": 931,
-  "t": 38.792,
+  "frame": 745,
+  "t": 31.042,
   "prompt": "low hit"
  },
  {
   "sfx": "step",
-  "frame": 1198,
-  "t": 49.917,
+  "frame": 979,
+  "t": 40.792,
   "gain": -6
  },
  {
   "sfx": "step",
-  "frame": 1226,
-  "t": 51.083,
+  "frame": 1007,
+  "t": 41.958,
   "gain": -6
  },
  {
   "sfx": "lock",
-  "frame": 1269,
-  "t": 52.875,
+  "frame": 1037,
+  "t": 43.208,
   "prompt": "deadbolt lock click"
  },
  {
   "sfx": "lock",
-  "frame": 1276,
-  "t": 53.167,
+  "frame": 1041,
+  "t": 43.375,
   "prompt": "deadbolt lock click"
  },
  {
   "sfx": "place",
-  "frame": 1425,
-  "t": 59.375,
+  "frame": 1160,
+  "t": 48.333,
   "prompt": "plastic camcorder set down on wood"
  },
  {
   "sfx": "beep",
-  "frame": 1460,
-  "t": 60.833,
+  "frame": 1192,
+  "t": 49.667,
   "prompt": "camcorder record beep"
  },
  {
   "sfx": "sheets",
-  "frame": 1682,
-  "t": 70.083,
+  "frame": 1360,
+  "t": 56.667,
   "prompt": "bed sheets rustle"
  },
  {
   "sfx": "creak",
-  "frame": 1784,
-  "t": 74.333,
+  "frame": 1445,
+  "t": 60.208,
   "prompt": "old bed creak"
  },
  {
   "sfx": "camstart",
-  "frame": 1840,
-  "t": 76.667,
+  "frame": 1497,
+  "t": 62.375,
   "prompt": "phone camera start sound"
  },
  {
   "sfx": "hit",
-  "frame": 1966,
-  "t": 81.917,
+  "frame": 1587,
+  "t": 66.125,
   "prompt": "deep boom"
  },
  {
   "sfx": "sting",
-  "frame": 2328,
-  "t": 97.0,
+  "frame": 1916,
+  "t": 79.833,
   "prompt": "creepy string sting"
  },
  {
   "sfx": "hit",
-  "frame": 2957,
-  "t": 123.208,
+  "frame": 2411,
+  "t": 100.458,
   "prompt": "low boom"
  },
  {
   "sfx": "sting2",
-  "frame": 3492,
-  "t": 145.5,
+  "frame": 2825,
+  "t": 117.708,
   "prompt": "horror sting eyes open"
  }
 ]
