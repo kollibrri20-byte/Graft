@@ -115,8 +115,10 @@ def main():
     caps = os.path.join(tmp, "caps.mov")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", os.path.join(tmp, "caps.txt"),
                     "-vf", f"fps={FPS},format=argb", "-c:v", "qtrle", caps], check=True)
-    sub = os.path.join(tmp, "subscribe.png")
-    subscribe_png(sub)
+    import endcard
+    end_dir = os.path.join(tmp, "end")
+    endcard.build(end_dir, dur=DUR - (S[35] + 1.0) + 0.2)
+    T_END = S[35] + 1.0
     # brightness envelope: fade in at the start, dips to black at shots 26/27/28, hard black between 35 and the end card
     dips = "*".join(f"min(1,abs(T-{c:.2f})/0.42)" for c in (S[25], S[26], S[27]))
     env = f"min(1,T/0.4)*{dips}*if(between(T,{S[35] - 0.0:.2f},{S[35] + 0.25:.2f}),0,1)"
@@ -135,11 +137,11 @@ def main():
     vf = (f"[0:v]minterpolate=fps=24:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1:scd=fdiff,format=yuv444p,geq=lum='lum(X,Y)*({env})':cb='128+(cb(X,Y)-128)*({env})':cr='128+(cr(X,Y)-128)*({env})',"
           f"scale={W}:{H}:flags=lanczos,unsharp=5:5:0.6,vignette=angle=0.3,format=yuv420p[v0];"
           f"[v0][1:v]overlay=format=auto[v1];"
-          f"[2:v]format=rgba,fade=t=in:st={S[35] + 1.6:.2f}:d=0.5:alpha=1[sb];"
-          f"[v1][sb]overlay=format=auto:enable='gte(t,{S[35] + 1.6:.2f})'[v]")
+          f"[2:v]format=rgba,setpts=PTS+{T_END:.3f}/TB[sb];"
+          f"[v1][sb]overlay=format=auto:eof_action=pass[v]")
     out = os.path.join(HERE, sys.argv[1] if len(sys.argv) > 1 else "final.mp4")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-framerate", "12", "-i", os.path.join(HERE, "odd", "o%05d.png"),
-                    "-i", caps, "-loop", "1", "-framerate", str(FPS), "-t", str(DUR), "-i", sub, "-i", os.path.join(HERE, "mix.wav"),
+                    "-i", caps, "-framerate", str(FPS), "-i", os.path.join(end_dir, "e%04d.png"), "-i", os.path.join(HERE, "mix.wav"),
                     "-filter_complex", vf, "-map", "[v]", "-map", "3:a", "-c:v", "libx264", "-preset", "slow", "-crf", "18",
                     "-pix_fmt", "yuv420p", "-r", str(FPS), "-af", "loudnorm=I=-14:TP=-1.5:LRA=11", "-ar", "48000", "-c:a", "aac", "-b:a", "256k", "-t", str(DUR), "-movflags", "+faststart", out],
                    check=True)

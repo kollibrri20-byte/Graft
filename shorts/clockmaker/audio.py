@@ -297,6 +297,16 @@ while tt0 < DUR - 0.3:
     put(sfx, tick("deep", 70), tt0, db(-12) if tt0 > S[35] else db(-14))
     tt0 += 1.0
 
+# end card: mouse clicks on like / subscribe / bell + a bell ding
+T_END = S[35] + 1.0
+for tc in (1.35, 2.25, 3.1):
+    put(sfx, tick("small", 90), T_END + tc, db(-14))
+put(sfx, np.column_stack([band(np.random.default_rng(91).standard_normal(int(SR * 0.3)), 2000, 8000, 2) * np.exp(-np.arange(int(SR * 0.3)) / SR * 30)] * 2), T_END + 1.35, db(-24))
+n = int(SR * 1.6)
+tt_ = np.arange(n) / SR
+ding = sum(np.sin(2 * np.pi * f * tt_) * np.exp(-tt_ * d) * a_ for f, d, a_ in ((1320, 2.5, 1.0), (1980, 3.5, 0.5), (2640, 5, 0.3)))
+for k in range(3):
+    put(sfx, ding / np.abs(ding).max(), T_END + 3.1 + k * 0.12, db(-16 - 4 * k))
 # ------------------------------------------------------------------ music (dark ambient, tension from shot 15)
 def pad(freqs, detune=0.003, seed=0):
     r = np.random.default_rng(seed)
