@@ -1,0 +1,5 @@
+<prosody rate="88%">Під в+улицями Пар+ижа</prosody><break time="180ms"/><prosody rate="80%" pitch="92%">леж+ать кістк+и</prosody><break time="120ms"/><prosody rate="78%" pitch="106%">п+онад шест+и мільй+онів</prosody><prosody rate="76%" pitch="94%"> люд+ей.</prosody>
+<prosody rate="92%" pitch="104%">Кол+и міськ+і кладов+ища</prosody><prosody rate="86%" pitch="98%"> переповн+илися,</prosody>
+<prosody rate="90%" pitch="96%">ост+анки перенесл+и</prosody><break time="100ms"/><prosody rate="84%" pitch="92%"> в стар+і підз+емні каменол+омні.</prosody>
+<prosody rate="90%" pitch="102%">Теп+ер там</prosody><prosody rate="80%" pitch="98%"> кілом+етри тун+елів,</prosody>
+<prosody rate="86%" pitch="96%">а ст+іни в+икладені</prosody><break time="260ms"/><prosody rate="72%" pitch="86%"> череп+ами.</prosody>
