@@ -1,0 +1,150 @@
+[
+ {
+  "sfx": "tick",
+  "frame": 2,
+  "t": 0.067,
+  "prompt": "quiet clock ticking in a silent dark bedroom at night",
+  "gain": -10,
+  "seconds": 10
+ },
+ {
+  "sfx": "gasp",
+  "frame": 176,
+  "t": 5.867,
+  "prompt": "sharp frightened inhale, eyes snapping open in the dark",
+  "gain": -6
+ },
+ {
+  "sfx": "whoosh",
+  "frame": 311,
+  "t": 10.367,
+  "prompt": "low eerie breathy whoosh, a dark presence appears in a dark room",
+  "gain": -3
+ },
+ {
+  "sfx": "thud",
+  "frame": 404,
+  "t": 13.467,
+  "prompt": "heavy soft thump on a mattress, something lands on a chest"
+ },
+ {
+  "sfx": "pressure",
+  "frame": 412,
+  "t": 13.733,
+  "prompt": "deep muffled heartbeat with heavy pressure, tense",
+  "gain": -4,
+  "seconds": 3
+ },
+ {
+  "sfx": "zap",
+  "frame": 547,
+  "t": 18.233,
+  "prompt": "electric power-down click with a soft descending hum"
+ },
+ {
+  "sfx": "blip",
+  "frame": 584,
+  "t": 19.467,
+  "prompt": "tiny electric blip bouncing off a barrier",
+  "gain": -10
+ },
+ {
+  "sfx": "blip",
+  "frame": 636,
+  "t": 21.2,
+  "prompt": "tiny electric blip bouncing off a barrier",
+  "gain": -10
+ },
+ {
+  "sfx": "blip",
+  "frame": 688,
+  "t": 22.933,
+  "prompt": "tiny electric blip bouncing off a barrier",
+  "gain": -10
+ },
+ {
+  "sfx": "shimmer",
+  "frame": 706,
+  "t": 23.533,
+  "prompt": "bright magical shimmer rising, mind waking up",
+  "gain": -5
+ },
+ {
+  "sfx": "blip",
+  "frame": 740,
+  "t": 24.667,
+  "prompt": "tiny electric blip bouncing off a barrier",
+  "gain": -10
+ },
+ {
+  "sfx": "blip",
+  "frame": 792,
+  "t": 26.4,
+  "prompt": "tiny electric blip bouncing off a barrier",
+  "gain": -10
+ },
+ {
+  "sfx": "drone",
+  "frame": 827,
+  "t": 27.567,
+  "prompt": "creeping low horror drone swelling, distorted whispers",
+  "gain": -6,
+  "seconds": 4
+ },
+ {
+  "sfx": "pop",
+  "frame": 935,
+  "t": 31.167
+ },
+ {
+  "sfx": "pop",
+  "frame": 1002,
+  "t": 33.4
+ },
+ {
+  "sfx": "pop",
+  "frame": 1079,
+  "t": 35.967
+ },
+ {
+  "sfx": "chime",
+  "frame": 1108,
+  "t": 36.933,
+  "prompt": "three soft bell chimes in a row",
+  "gain": -8
+ },
+ {
+  "sfx": "pop",
+  "frame": 1168,
+  "t": 38.933
+ },
+ {
+  "sfx": "brush",
+  "frame": 1232,
+  "t": 41.067,
+  "prompt": "soft oil paint brush strokes on canvas",
+  "gain": -8
+ },
+ {
+  "sfx": "spotlight",
+  "frame": 1471,
+  "t": 49.033,
+  "prompt": "heavy theatre spotlight switching on with a clunk",
+  "gain": -3
+ },
+ {
+  "sfx": "birds",
+  "frame": 1530,
+  "t": 51.0,
+  "prompt": "soft early morning birdsong through a window, calm",
+  "gain": -8,
+  "seconds": 6
+ },
+ {
+  "sfx": "exhale",
+  "frame": 1646,
+  "t": 54.867,
+  "prompt": "long relieved exhale of a person sitting up in bed",
+  "gain": -4
+ }
+]
