@@ -17,3 +17,10 @@ ffmpeg -y -loglevel error -framerate 12 -i "$SEQ/%06d.jpg" -vf "$VF" -c:v libx26
 ffmpeg -y -loglevel error -framerate 12 -i "$SEQ/%06d.jpg" -i "$D/mix.wav" -vf "$VF" -c:v libx264 -preset slow \
   -b:v 1500k -maxrate 3500k -bufsize 7000k -pass 2 -passlogfile "$R/x264" -pix_fmt yuv420p \
   -c:a aac -b:a 192k -shortest -movflags +faststart "$OUT"
+# Фінальна заставка (лайк / підписка / дзвоник) у кінці
+if [ -f "$D/../endcard/endcard.mp4" ] || [ -n "${ENDCARD:-}" ]; then
+  EC=${ENDCARD:-$D/../endcard/endcard.mp4}
+  printf "file '%s'\nfile '%s'\n" "$OUT" "$EC" > "$R/endlist.txt"
+  ffmpeg -y -loglevel error -f concat -safe 0 -i "$R/endlist.txt" -c copy -movflags +faststart "${OUT%.mp4}_end.mp4"
+  mv "${OUT%.mp4}_end.mp4" "$OUT"
+fi
