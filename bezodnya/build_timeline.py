@@ -108,13 +108,14 @@ def main():
     durs[-1] += 4.0
     t0 = 0.0
     voice = np.zeros(int((sum(durs) + 1) * SR), np.float32)
-    subs, timeline = [], []
+    subs, timeline, seglog = [], [], []
     for s, d in zip(scenes, durs):
         lead = LEAD_IN + (d - s["speech"] - LEAD_IN - TAIL) * 0.35
         if s["scene"] == 32:
             lead = LEAD_IN + 2.0
         t = t0 + lead
-        for sg in s["segs"]:
+        for si_, sg in enumerate(s["segs"]):
+            seglog.append(dict(scene=s["scene"], idx=si_, start=t, end=t + sg["pdur"], text=sg["text"], mood=sg["mood"]))
             i = int(t * SR)
             voice[i:i + len(sg["wav"])] += sg["wav"]
             # субтитри: розподіл часу пропорційно складам
@@ -175,6 +176,7 @@ def main():
     with open(os.path.join(odir, "overlay.ass"), "w") as f:
         f.write("\n".join(ass) + "\n")
     json.dump(dict(total=total, scenes=timeline), open(os.path.join(odir, "timeline.json"), "w"), indent=1)
+    json.dump(seglog, open(os.path.join(odir, "segments.json"), "w"), indent=1, ensure_ascii=False)
     print(f"total {total:.1f}s ({int(total // 60)}:{total % 60:04.1f})")
 
 
