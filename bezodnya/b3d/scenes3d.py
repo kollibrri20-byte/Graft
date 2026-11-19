@@ -19,8 +19,19 @@ def shake(t, amp, seed=0.0):
                    amp * (math.sin(t * 43 + 1 + seed) * 0.6 + math.sin(t * 71 + seed) * 0.4)))
 
 
+_VOL0 = {}
+
+
 def use_cam(c):
-    bpy.context.scene.camera = c
+    """Перемикання камери; у кабіні ведучого вимикаємо підводний туман."""
+    sc = bpy.context.scene
+    sc.camera = c
+    vol = sc.world.node_tree.nodes.get("VOL")
+    if vol is None:
+        return
+    if "d" not in _VOL0:
+        _VOL0["d"] = vol.inputs["Density"].default_value
+    vol.inputs["Density"].default_value = 0.0 if c.get("cockpit") else _VOL0["d"]
 
 
 # ================================================================ батискаф 1960 зсередини
@@ -1472,7 +1483,7 @@ def scene_31(ctx):
     def up(t):
         if t < s1:
             use_cam(cp.cam)
-            vol.inputs["Density"].default_value = 0.02
+            vol.inputs["Density"].default_value = 0.0
             cp.update(t, push=t / s1)
         elif t < s2:
             use_cam(camM)

@@ -57,6 +57,7 @@ class Cockpit:
         self.o = o
         self.host = Character("Host", loc=o)
         hull = mat("hull", (0.11, 0.12, 0.13), 0.55, metal=0.6, noise=0.4, noise_scale=2, bump=0.03)
+        hull.use_backface_culling = True
         # стіни — внутрішня поверхня сфери
         bm = bmesh.new()
         bmesh.ops.create_uvsphere(bm, u_segments=48, v_segments=24, radius=1.25)
@@ -97,6 +98,7 @@ class Cockpit:
         self.rim = light("AREA", o + Vector((0.45 * cam_side, 0.75, 0.6)), 22, (0.35, 0.65, 1.0),
                          target=o + Vector((0, 0, 0.4)), size=0.35)
         self.cam = camera(o + Vector((0.1 * cam_side, -0.95, 0.40)), o + Vector((0, 0, 0.37)), lens=42)
+        self.cam["cockpit"] = True
         self.cam.data.dof.use_dof = True
         self.cam.data.dof.focus_object = self.host.head
         self.cam.data.dof.aperture_fstop = 2.0

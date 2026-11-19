@@ -26,8 +26,8 @@ def reset(world_col=(0.0, 0.01, 0.025), density=0.02, anisotropy=0.6, vol_col=(0
     sc.render.resolution_percentage = 100
     sc.eevee.taa_render_samples = samples
     try:
-        sc.eevee.volumetric_tile_size = "16"
-        sc.eevee.volumetric_samples = 16
+        sc.eevee.volumetric_tile_size = "8"
+        sc.eevee.volumetric_samples = 24
         sc.eevee.shadow_ray_count = 1
         sc.eevee.shadow_step_count = 1
         sc.eevee.use_volumetric_shadows = False
@@ -381,9 +381,8 @@ def smooth(a, b, x):
 
 
 def warmup(update, n_frames, tmp):
-    """EEVEE на CPU компілює шейдери у фоні: перші кадри виходять без матеріалів.
-    Показуємо все, рендеримо з кожної камери, доки компіляція не завершиться."""
-    import time
+    """EEVEE на CPU компілює шейдери ліниво й у фоні: поки компілюється, об'єкти не видно.
+    Рендеримо з кожної камери (усе видиме), доки кадр не перестане змінюватися."""
     sc = bpy.context.scene
     update(0.0)
     hidden = [o for o in bpy.data.objects if o.hide_render]
@@ -391,16 +390,22 @@ def warmup(update, n_frames, tmp):
         o.hide_render = False
     cams = [o for o in bpy.data.objects if o.type == "CAMERA"]
     sc.render.filepath = tmp
-    for i in range(80):
-        sc.camera = cams[i % len(cams)]
-        bpy.ops.render.render(write_still=False)
-        try:
-            busy = bpy.app.is_job_running("SHADER_COMPILATION")
-        except Exception:
-            busy = i < 6
-        if not busy and i >= len(cams) * 2:
-            break
-    print("warmup renders:", i + 1, flush=True)
+    total = 0
+    for cam in cams:
+        sc.camera = cam
+        prev = None
+        for i in range(70):
+            bpy.ops.render.render(write_still=True)
+            total += 1
+            im = bpy.data.images.load(tmp, check_existing=False)
+            px = np.empty(len(im.pixels), np.float32)
+            im.pixels.foreach_get(px)
+            bpy.data.images.remove(im)
+            px = px[::97]
+            if prev is not None and i >= 2 and float(np.abs(px - prev).mean()) < 0.0015:
+                break
+            prev = px
+    print("warmup renders:", total, flush=True)
     for o in hidden:
         o.hide_render = True
 
