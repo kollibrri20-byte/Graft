@@ -11,7 +11,7 @@ import bpy
 import numpy as np
 from mathutils import Euler, Matrix, Vector
 
-RES = (960, 540)
+RES = (768, 432)
 FPS = 12
 
 
@@ -19,14 +19,17 @@ FPS = 12
 def reset(world_col=(0.0, 0.01, 0.025), density=0.02, anisotropy=0.6, vol_col=(0.3, 0.55, 0.7), samples=6,
           strength=1.0):
     bpy.ops.wm.read_factory_settings(use_empty=True)
+    _mats.clear()
     sc = bpy.context.scene
     sc.render.engine = "BLENDER_EEVEE"
     sc.render.resolution_x, sc.render.resolution_y = RES
     sc.render.resolution_percentage = 100
     sc.eevee.taa_render_samples = samples
     try:
-        sc.eevee.volumetric_tile_size = "8"
-        sc.eevee.volumetric_samples = 32
+        sc.eevee.volumetric_tile_size = "16"
+        sc.eevee.volumetric_samples = 16
+        sc.eevee.shadow_ray_count = 1
+        sc.eevee.shadow_step_count = 1
         sc.eevee.use_volumetric_shadows = False
         sc.eevee.volumetric_end = 120
     except Exception:
@@ -45,8 +48,10 @@ def reset(world_col=(0.0, 0.01, 0.025), density=0.02, anisotropy=0.6, vol_col=(0
     bg = nt.nodes["Background"]
     bg.inputs[0].default_value = (*world_col, 1)
     bg.inputs[1].default_value = strength
+    VOLUME_ON[0] = density > 0
     if density > 0:
-        v = nt.nodes.new("ShaderNodeVolumePrincipled")
+        v = nt.nodes.new("ShaderNodeVolumeScatter")
+        v.name = "VOL"
         v.inputs["Color"].default_value = (*vol_col, 1)
         v.inputs["Density"].default_value = density
         v.inputs["Anisotropy"].default_value = anisotropy
@@ -87,7 +92,15 @@ def dof(cam, focus_obj=None, dist=None, fstop=2.8):
     cam.data.dof.aperture_fstop = fstop
 
 
+VOLUME_ON = [False]
+
+
 def light(kind, loc, energy, color=(1, 1, 1), target=None, size=0.2, spot=45, blend=0.4, rot=None, vol=1.0):
+    if kind == "SUN" and VOLUME_ON[0]:
+        # сонце + об'ємна вода в EEVEE (CPU) дає чорний кадр -> велике площинне світло згори
+        kind, size = "AREA", 80
+        energy = energy * size * size * 4
+        loc = (loc[0], loc[1], 40)
     ld = bpy.data.lights.new("L", kind)
     ld.energy = energy
     ld.color = color
@@ -367,9 +380,37 @@ def smooth(a, b, x):
     return ease((x - a) / (b - a)) if b != a else float(x >= a)
 
 
+def warmup(update, n_frames, tmp):
+    """EEVEE на CPU компілює шейдери у фоні: перші кадри виходять без матеріалів.
+    Показуємо все, рендеримо з кожної камери, доки компіляція не завершиться."""
+    import time
+    sc = bpy.context.scene
+    update(0.0)
+    hidden = [o for o in bpy.data.objects if o.hide_render]
+    for o in hidden:
+        o.hide_render = False
+    cams = [o for o in bpy.data.objects if o.type == "CAMERA"]
+    sc.render.filepath = tmp
+    for i in range(80):
+        sc.camera = cams[i % len(cams)]
+        bpy.ops.render.render(write_still=False)
+        try:
+            busy = bpy.app.is_job_running("SHADER_COMPILATION")
+        except Exception:
+            busy = i < 6
+        if not busy and i >= len(cams) * 2:
+            break
+    print("warmup renders:", i + 1, flush=True)
+    for o in hidden:
+        o.hide_render = True
+
+
 def render_range(out_dir, prefix, n_frames, update, start=0):
     sc = bpy.context.scene
     os.makedirs(out_dir, exist_ok=True)
+    todo = [f for f in range(start, n_frames) if not os.path.exists(os.path.join(out_dir, f"{prefix}_{f:05d}.jpg"))]
+    if todo:
+        warmup(update, n_frames, os.path.join(out_dir, "warm.jpg"))
     for f in range(start, n_frames):
         path = os.path.join(out_dir, f"{prefix}_{f:05d}.jpg")
         if os.path.exists(path):

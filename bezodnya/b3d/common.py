@@ -152,7 +152,7 @@ def water_env(sc, col=(0.0, 0.02, 0.05), vol=(0.2, 0.5, 0.65), density=0.03):
     nt = w.node_tree
     nt.nodes["Background"].inputs[0].default_value = (*col, 1)
     for n in nt.nodes:
-        if n.type == "PRINCIPLED_VOLUME":
+        if n.type in ("PRINCIPLED_VOLUME", "SCATTER_VOLUME", "VOLUME_SCATTER"):
             n.inputs["Color"].default_value = (*vol, 1)
             n.inputs["Density"].default_value = density
 
