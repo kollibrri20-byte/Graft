@@ -22,9 +22,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from voice_script import SCENES  # noqa: E402
 
 VOWELS = "аеєиіїоуюя"
-SR = 48000  # модель видає 48 кГц
+# Tacotron2 + HiFi-GAN, 22.05 кГц; темп змінюється пізніше в post.py (rubberband)
 
-# темп (length scale: >1 — повільніше), гучність (дБ)
+# speed: коефіцієнт тривалості (>1 — повільніше), застосовується в post.py; gain у дБ
 MOODS = {
     "calm": dict(speed=1.10, gain=0.0, noise=0.55),
     "soft": dict(speed=1.22, gain=-3.0, noise=0.50),
@@ -45,7 +45,7 @@ def stress_monosyllables(text):
         if len(idx) == 1:
             return w[: idx[0]] + "+" + w[idx[0]:]
         return w
-    return re.sub(r"[а-яіїєґ']+", fix, text)
+    return re.sub(r"[а-яіїєґ'+]+", fix, text)
 
 
 def normalize(text):
@@ -78,30 +78,45 @@ def main():
     spk = torch.tensor(np.asarray(spk), dtype=torch.float32)
     fs = tts.fs
 
-    def synth(text, mood):
-        p = MOODS[mood]
-        tts.decode_conf.update(
-            dict(alpha=p["speed"], noise_scale=p["noise"], noise_scale_dur=0.8)
-        )
+    def synth_once(text):
         with torch.no_grad():
             wav = tts(text, spembs=spk)["wav"].view(-1).cpu().numpy()
-        # прибрати тишу на краях
-        thr = 0.01 * np.abs(wav).max()
+        thr = 0.02 * np.abs(wav).max()
         nz = np.where(np.abs(wav) > thr)[0]
-        wav = wav[max(nz[0] - int(0.02 * fs), 0): nz[-1] + int(0.06 * fs)]
+        wav = wav[max(nz[0] - int(0.03 * fs), 0): nz[-1] + int(0.08 * fs)].copy()
         fade = int(0.01 * fs)
         wav[:fade] *= np.linspace(0, 1, fade)
         wav[-fade:] *= np.linspace(1, 0, fade)
-        return wav * 10 ** (p["gain"] / 20)
+        return wav
 
-    def sil(sec):
-        return np.zeros(int(sec * fs), dtype=np.float32)
+    def synth(text):
+        """Tacotron2 інколи "зриває" увагу (ковтає кінець або белькоче).
+        Робимо кілька дублів і беремо той, чий темп найближчий до норми."""
+        n = sum(c in VOWELS for c in text)  # кількість складів
+        takes = []
+        for _ in range(3):
+            w = synth_once(text)
+            rate = n / (len(w) / fs)  # складів за секунду
+            takes.append((abs(rate - 4.7), rate, w))
+            if 4.0 < rate < 5.6:
+                break
+        takes.sort(key=lambda x: x[0])
+        return takes[0][2], takes[0][1]
 
+    only = None
+    for a in sys.argv:
+        if a.startswith("--only="):
+            only = {int(x) for x in a[7:].split(",")}
     scenes = SCENES[:3] if test else SCENES
-    manifest = []
+    man_path = os.path.join(out_dir, "manifest.json")
+    manifest = {}
+    if os.path.exists(man_path):
+        manifest = {s["scene"]: s for s in json.load(open(man_path))["scenes"]}
     for si, (mood0, phrases) in enumerate(scenes, 1):
+        if only and si not in only:
+            continue
         mood = mood0
-        chunks, words = [], []
+        segs = []
         for ph in phrases:
             m = re.match(r"@(\w+)\s+(.*)", ph)
             if m:
@@ -109,22 +124,24 @@ def main():
             pieces = split_phrase(ph)
             for k, piece in enumerate(pieces):
                 text = normalize(piece)
-                print(f"[{si:02d}] {mood:5s} {text}", flush=True)
-                chunks.append(synth(text, mood))
+                wav, rate = synth(text)
                 last = k == len(pieces) - 1
                 if not last:
-                    chunks.append(sil(PAUSE_ELLIPSIS))
+                    pause = PAUSE_ELLIPSIS
                 elif ph.rstrip().endswith("?"):
-                    chunks.append(sil(PAUSE_QUESTION))
+                    pause = PAUSE_QUESTION
                 else:
-                    chunks.append(sil(PAUSE_SENT + (0.15 if mood == "soft" else 0)))
-        wav = np.concatenate(chunks[:-1]).astype(np.float32)
-        path = os.path.join(out_dir, f"scene_{si:02d}.wav")
-        sf.write(path, wav, fs, "PCM_16")
-        manifest.append(dict(scene=si, file=path, dur=len(wav) / fs))
-        print(f"scene {si}: {len(wav) / fs:.2f}s", flush=True)
-    with open(os.path.join(out_dir, "manifest.json"), "w") as f:
-        json.dump(dict(fs=fs, voice=voice, scenes=manifest), f, indent=1)
+                    pause = PAUSE_SENT + (0.15 if mood == "soft" else 0)
+                path = os.path.join(out_dir, f"s{si:02d}_{len(segs):02d}.wav")
+                sf.write(path, wav, fs, "PCM_16")
+                display = piece.replace("+", "") + ("…" if not last else "")
+                segs.append(dict(file=path, mood=mood, pause=pause, text=display,
+                                 tts_text=text, dur=len(wav) / fs, rate=rate))
+                print(f"[{si:02d}] {mood:5s} {rate:4.1f} syl/s {len(wav)/fs:5.2f}s  {text}", flush=True)
+        manifest[si] = dict(scene=si, segments=segs)
+        with open(man_path, "w") as f:
+            json.dump(dict(fs=fs, voice=voice, scenes=[manifest[k] for k in sorted(manifest)]),
+                      f, indent=1, ensure_ascii=False)
 
 
 if __name__ == "__main__":
