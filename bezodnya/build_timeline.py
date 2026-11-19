@@ -46,6 +46,9 @@ def process_segment(path, mood, tmp):
     t = TEMPO[mood]
     af = (f"aresample={SR}:resampler=soxr,rubberband=tempo={t}:pitch=0.9439:formant=preserved:"
           f"pitchq=quality:transients=smooth:window=long")
+    if os.environ.get("NATURAL"):
+        # природний голос (HolosTTS): без зміни темпу й тону
+        af = f"aresample={SR}:resampler=soxr"
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", path, "-af", af, "-ac", "1", out], check=True)
     return read_wav(out)[1]
 
@@ -106,11 +109,23 @@ def main():
     # фінальна сцена має довгий хвіст для "очей" у темряві
     durs = [b + a for b, a in zip(base, add)]
     durs[-1] += 4.0
+    if os.environ.get("FIXED_TL"):
+        # зберегти тривалості сцен попередньої версії (щоб не перерендерювати 3D-сцени без ведучого)
+        durs = [x["dur"] for x in json.load(open(os.environ["FIXED_TL"]))["scenes"]]
+        for sc_, d in zip(scenes, durs):
+            room = d - LEAD_IN - TAIL
+            if sc_["speech"] > room:
+                pauses = sum(g["pause"] for g in sc_["segs"][:-1])
+                k = max(0.35, 1 - (sc_["speech"] - room) / max(pauses, 1e-6))
+                for g in sc_["segs"]:
+                    g["pause"] *= k
+                sc_["speech"] = sum(g["pdur"] + g["pause"] for g in sc_["segs"]) - sc_["segs"][-1]["pause"]
+                print(f"scene {sc_['scene']}: pauses x{k:.2f} -> {sc_['speech']:.1f}s / room {room:.1f}s")
     t0 = 0.0
     voice = np.zeros(int((sum(durs) + 1) * SR), np.float32)
     subs, timeline, seglog = [], [], []
     for s, d in zip(scenes, durs):
-        lead = LEAD_IN + (d - s["speech"] - LEAD_IN - TAIL) * 0.35
+        lead = LEAD_IN + max(0.0, d - s["speech"] - LEAD_IN - TAIL) * 0.35
         if s["scene"] == 32:
             lead = LEAD_IN + 2.0
         t = t0 + lead
