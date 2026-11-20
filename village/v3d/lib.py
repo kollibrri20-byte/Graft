@@ -424,7 +424,7 @@ def hut(mats, loc, rot_z, lit=True, door_open=False, shutters=False, win_k=1.0, 
             objs.append(point_light((sx, -d / 2 - 0.7, 1.45 * scale), 90 * win_k, shadow=False))
     if door_open and lit:
         objs.append(box((0, -d / 2 - 0.01, 1.0 * scale), (0.9 * scale, 0.04, 2.0 * scale), mats["win"]))
-        objs.append(box((0.62 * scale, -d / 2 - 0.45, 1.0 * scale), (0.06, 0.9 * scale, 2.0 * scale), mats["wood"]))
+        objs.append(box((0.5 * scale, -d / 2 + 0.45, 1.0 * scale), (0.06, 0.9 * scale, 2.0 * scale), mats["wood"]))
         if lights:
             objs.append(point_light((0, -d / 2 - 1.0, 1.3 * scale), 160 * win_k, shadow=True, radius=0.4))
     else:
