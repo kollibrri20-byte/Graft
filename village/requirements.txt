@@ -1,0 +1,4 @@
+numpy
+scipy
+Pillow
+opencv-python-headless  # необов'язково, але рендер у ~2.5 раза швидший

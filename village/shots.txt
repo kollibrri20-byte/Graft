@@ -1,0 +1,125 @@
+# Село, якого немає на жодній карті — покадровий сценарій.
+# Формат: номер | речення озвучки | промт для картинки. Рядки з # ігноруються.
+# == Кадри 1–26: хук і дорога
+001 | Цього села немає на жодній карті. | Aerial high-angle view of a hidden Carpathian valley at night, thick fog, a few faint amber lights of a tiny village below, cold blue moonlight, cinematic photorealistic film still, 35mm film grain, 16:9
+002 | Навігатор мовчить уже годину... | Extreme close-up of a phone navigator on a car dashboard showing a blank grey map and no signal, blue screen glow in a dark car, raindrops on windshield, cinematic photorealistic film still, 16:9
+003 | а туман стає дедалі густішим. | Low-angle wide shot of a narrow forest road at night, dense fog swallowing car headlight beams between tall pines, cinematic photorealistic film still, 35mm, 16:9
+004 | Андрій іде пішки, | Shot from behind of Andriy (34-year-old man, short dark brown hair, stubble, olive green field jacket, grey hoodie, camera strap) walking along a foggy forest path at night, backlit by fog glow, cinematic photorealistic film still, 16:9
+005 | освітлюючи дорогу ліхтариком. | Close-up of a man's hand gripping a flashlight, sharp beam cutting through fog and pine trunks, hard side light, deep shadows, cinematic photorealistic film still, 16:9
+006 | І раптом — дерев'яний знак. | Low-angle shot of an old weathered wooden village sign on a mossy post in fog, lit by a flashlight beam, night, cinematic photorealistic film still, 16:9, no text
+007 | Без назви. | Macro close-up of a blank weathered wooden plank with no letters, moss and cracks, flashlight circle of light, cinematic photorealistic film still, 16:9, no text
+008 | За ним — вогні у вікнах старих хат. | Wide shot of old whitewashed Ukrainian clay houses with thatched roofs in fog, warm amber light glowing in every window, night, seen past a wooden sign, cinematic photorealistic film still, 16:9
+009 | Люди виходять на поріг. | Medium shot of villagers in 1960s rural clothes stepping out of open doorways, warm backlight from inside, silhouettes in fog, cinematic photorealistic film still, 16:9
+010 | Усміхаються. | Close-up of three village people of different ages smiling calmly with identical smiles, warm lantern light on faces, dark background, cinematic photorealistic film still, 16:9
+011 | І кожен із них... знає його ім'я. | Dutch angle shot of Andriy (34-year-old man, short dark brown hair, stubble, olive green field jacket) in a foggy village street, surrounded by smiling villagers looking at him, amber and blue light, cinematic photorealistic film still, 16:9
+012 | «Нарешті ти повернувся, Андрію». | Close-up of Hanna (80-year-old woman, deep wrinkles, pale blue eyes, white headscarf with faded red embroidery, grey knitted shawl) in a doorway, warm smile, flickering candlelight, cinematic photorealistic film still, 16:9
+013 | Але Андрій ніколи тут не був. | Extreme close-up of Andriy's grey eyes and stubble, one side warm amber light, other side cold blue shadow, fear in his eyes, cinematic photorealistic film still, 16:9
+014 | Принаймні... він так думав. | High-angle wide shot of a lone man in an olive green jacket standing in an empty foggy village street at night, glowing windows around, fog closing in, cinematic photorealistic film still, 16:9
+015 | Розділ перший. Дорога. | Aerial view of an empty serpentine mountain road through Carpathian forest at dusk, low mist, muted green-grey tones, cinematic photorealistic film still, 16:9
+016 | Три години тому. | Profile shot inside a car of Andriy (34-year-old man, short dark brown hair, stubble, olive green field jacket) driving at sunset, orange light flickering through trees on his face, cinematic photorealistic film still, 16:9
+017 | Андрій — фотограф. | Close-up of Andriy looking through the viewfinder of a vintage film camera, golden hour backlight, shallow depth of field, cinematic photorealistic film still, 16:9
+018 | Він їхав у гори знімати старі покинуті села, | Aerial shot of a small dark hatchback driving on a winding road through dense pine forest in the Carpathian mountains, golden hour, cinematic photorealistic film still, 16:9
+019 | про які пишуть лише на забутих форумах. | Over-the-shoulder shot of a phone screen showing an old black-and-white photo of an abandoned thatched hut, dim car interior, screen glow, cinematic photorealistic film still, 16:9, no readable text
+020 | Дорога ставала вужчою. | Low-angle shot of a narrow gravel road squeezed between giant pine trunks, car passing, dusk, cinematic photorealistic film still, 16:9
+021 | Ліс — темнішим. | Wide shot of a dark dense forest at twilight, last light fading, tiny car headlights deep among trees, cinematic photorealistic film still, 16:9
+022 | Сигнал зник. | Macro shot of a phone screen with zero signal bars, cold blue glow, reflections, cinematic photorealistic film still, 16:9, no readable text
+023 | Двигун кашлянув... і заглух. | Close-up of a car dashboard with warning lights flickering out, needles falling, darkness creeping in, cinematic photorealistic film still, 16:9
+024 | Повернутися назад він уже не міг. | Shot from behind of Andriy standing next to his stopped car, looking back at the road swallowed by fog, grey-blue light, cinematic photorealistic film still, 16:9
+025 | Попереду був лише туман... | First-person view of a flashlight beam disappearing into a wall of white fog in a night forest, cinematic photorealistic film still, 16:9
+026 | і стежка, якої не було на карті. | High-angle shot of a narrow mossy path leading into a misty forest, pale moonlight beams through branches, cinematic photorealistic film still, 16:9
+# == Кадри 27–57: привітання і фотографії
+027 | Розділ другий. Привітання. | Wide establishing shot of an old Ukrainian village square at night in fog, wooden church dome in the background, warm windows, cinematic photorealistic film still, 16:9
+028 | Село ніби чекало на нього. | Shot from behind of Andriy (34-year-old man, short dark brown hair, stubble, olive green field jacket) entering a village street, all doors open and lit as if waiting, symmetrical composition, cinematic photorealistic film still, 16:9
+029 | На площі горіли ліхтарі, хоча електричних стовпів ніде не було. | Low-angle shot of old oil lanterns glowing on wooden poles with no wires, fog around them, night sky, cinematic photorealistic film still, 16:9
+030 | Чоловік із відрами води кивнув йому, як старому знайомому. | Medium shot of an old village man in a 1960s shirt and cap carrying two wooden buckets of water on a yoke, nodding with a friendly smile, lantern light, cinematic photorealistic film still, 16:9
+031 | Жінка біля криниці гукнула: «Андрію, ти змерз, іди грійся». | Village woman in a headscarf at an old wooden well with a crane, calling out and waving, fog, warm and blue light mix, cinematic photorealistic film still, 16:9
+032 | Він не називав свого імені. | Close-up of Andriy frowning in confusion, lantern light on one cheek, fog behind, cinematic photorealistic film still, 16:9
+033 | Нікому. | Over-the-shoulder shot from behind Andriy facing a row of silent smiling villagers, shallow depth of field, cold light, cinematic photorealistic film still, 16:9
+034 | Діти бігли за ним, сміючись, | Three barefoot village children aged 7–10 in old linen clothes running and laughing on a foggy village street at night, motion blur, lantern light, cinematic photorealistic film still, 16:9
+035 | і тягнули за рукав до хати з синіми віконницями. | Close-up of a child's small hand pulling the sleeve of an olive green field jacket, a whitewashed house with blue wooden shutters behind, cinematic photorealistic film still, 16:9
+036 | На ґанку стояла стара Ганна. | Low-angle medium shot of Hanna (80-year-old woman, deep wrinkles, pale blue eyes, white headscarf with faded red embroidery, long dark wool dress, grey knitted shawl) standing on a wooden porch, warm light behind her, cinematic photorealistic film still, 16:9
+037 | Вона дивилася на нього так, як дивляться на сина, що нарешті повернувся додому. | Close-up of Hanna's wrinkled face with tears of joy in her pale blue eyes, tender smile, candlelight, cinematic photorealistic film still, 16:9
+038 | «Я напекла твоїх улюблених пиріжків. З вишнями». | Macro shot of old wrinkled hands holding a clay plate of golden cherry pies, steam rising, warm candlelight, cinematic photorealistic film still, 16:9
+039 | Андрій зупинився. | Medium shot of Andriy frozen on the porch steps, half his body in warm light, half in blue shadow, cinematic photorealistic film still, 16:9
+040 | Пиріжки з вишнями пекла його бабуся. | Soft-focus memory shot, warm sepia tones, a grandmother's hands kneading dough in a 1990s kitchen, a small boy watching, sunlight from a window, cinematic photorealistic film still, 16:9
+041 | Колись давно. | Faded old color photograph look of a small boy eating a cherry pie on a summer bench, light leaks, nostalgic, cinematic photorealistic, 16:9
+042 | І про це не знав ніхто. | Extreme close-up of Andriy's eyes widening, reflection of candle flame in his pupils, darkness around, cinematic photorealistic film still, 16:9
+043 | Розділ третій. Фотографії. | Interior of an old Ukrainian village hut at night, clay oven, embroidered towels, icons in the corner, candles, wide shot, cinematic photorealistic film still, 16:9
+044 | У хаті пахло хлібом і воском. | Close-up of a round loaf of bread on an embroidered cloth next to melting beeswax candles, warm light, smoke curl, cinematic photorealistic film still, 16:9
+045 | На столі — гаряча вечеря на дві тарілки, | High-angle top-down shot of a wooden table with two clay plates of steaming borscht, two spoons, bread, candle, cinematic photorealistic film still, 16:9
+046 | ніби його давно чекали. | Medium shot of Hanna pulling out a chair for Andriy at the table, smiling, candlelight and deep shadows, cinematic photorealistic film still, 16:9
+047 | Діти сіли в куті й почали малювати. | Three village children in linen clothes sitting on the floor in a dim corner drawing with charcoal on paper, one candle, cinematic photorealistic film still, 16:9
+048 | Через хвилину вони показали йому аркуш. | Over-the-shoulder shot from behind Andriy as a little girl holds up a sheet of paper towards him with an unblinking smile, candlelight, cinematic photorealistic film still, 16:9
+049 | На ньому був він. | Close-up of a detailed charcoal drawing on old paper showing the portrait of a 34-year-old man with short hair and stubble, child's hands holding it, cinematic photorealistic, 16:9
+050 | Точний, аж до шраму над бровою. | Extreme close-up of Andriy touching a small scar above his left eyebrow with his fingers, side candlelight, cinematic photorealistic film still, 16:9
+051 | А на стіні, у старих дерев'яних рамках, висіли фотографії. | Andriy holding a candle, walking towards a whitewashed wall covered with old black-and-white photos in wooden frames, long shadow, cinematic photorealistic film still, 16:9
+052 | Хлопчик на санчатах. | Old black-and-white photo in a wooden frame: a small boy on a wooden sled in snow in front of a thatched hut, candlelight glare on the glass, cinematic photorealistic, 16:9
+053 | Хлопчик біля цієї самої хати. | Old black-and-white photo in a wooden frame: a boy of 8 standing by a whitewashed house with shutters, squinting at the sun, cinematic photorealistic, 16:9
+054 | Хлопчик на руках у Ганни. | Old black-and-white photo in a wooden frame: a middle-aged village woman in a headscarf holding a toddler boy, both smiling, cinematic photorealistic, 16:9
+055 | Це був Андрій. | Close-up of Andriy's trembling hand touching the glass of an old framed photo, candle flame reflected, cinematic photorealistic film still, 16:9
+056 | Але він ніколи не робив цих фото. | Dutch angle close-up of Andriy's pale frightened face lit from below by a candle, wall of photos blurred behind, cinematic photorealistic film still, 16:9
+057 | І ніколи тут не жив. | Wide shot from a dark corner: Andriy alone in the hut before the photo wall, Hanna watching silently from the doorway in shadow, cinematic photorealistic film still, 16:9
+# == Кадри 58–92: без тіней і коло
+058 | Розділ четвертий. Без тіней. | Wide shot of the silent village at midnight under a full moon, every window dark except one, cold blue light, cinematic photorealistic film still, 16:9
+059 | Уночі він не міг заснути. | High-angle shot of Andriy (34-year-old man, short dark brown hair, stubble, grey hoodie) lying awake on an old wooden bed with embroidered pillows, moonlight stripe across his face, cinematic photorealistic film still, 16:9
+060 | Годинник на стіні не цокав. | Medium shot of an antique wooden wall clock with a frozen pendulum in a dark hut, moonlight from the side, cinematic photorealistic film still, 16:9
+061 | Стрілки завмерли на без п'яти дванадцять. | Macro shot of an old clock face with hands stopped at 11:55, dust on the glass, cold light, cinematic photorealistic film still, 16:9
+062 | Андрій вийшов надвір. | Shot from inside a dark hut as Andriy opens the creaking wooden door into bright moonlight and fog, silhouette, cinematic photorealistic film still, 16:9
+063 | Місяць світив яскраво... | Low-angle shot of a huge bright full moon over thatched roofs and a wooden church dome, thin clouds, cinematic photorealistic film still, 16:9
+064 | але люди, що стояли біля хат, не відкидали тіней. | Wide shot of villagers standing motionless by their houses in bright moonlight, the ground under them clean without any shadows, while the fences cast long shadows, eerie, cinematic photorealistic film still, 16:9
+065 | Жодної. | Ground-level shot: Andriy's long dark moonlight shadow stretches across the dirt road towards the feet of a villager who casts no shadow at all, cinematic photorealistic film still, 16:9
+066 | Стежка привела його на старе кладовище за церквою. | Tracking shot from behind Andriy walking a path to an old village cemetery behind a wooden church, fog between tilted crosses, moonlight, cinematic photorealistic film still, 16:9
+067 | Серед похилених хрестів була одна свіжа могила. | Wide shot of a foggy old cemetery with crooked weathered wooden crosses and one fresh grave mound in the center, moonbeam on it, cinematic photorealistic film still, 16:9
+068 | Свіжа земля. Свіжі квіти. | Close-up of freshly dug dark earth on a grave with a bouquet of fresh white and red flowers, dew drops, flashlight light, cinematic photorealistic film still, 16:9
+069 | А на дерев'яному хресті — його ім'я. | Low-angle shot of a new wooden grave cross with a carved name plate, a towel embroidered in red tied on it, flashlight beam, cinematic photorealistic film still, 16:9
+070 | І його дата народження. | Close-up of Andriy kneeling by the grave, shining a flashlight at the cross, his face frozen in horror, cinematic photorealistic film still, 16:9
+071 | Дата смерті була порожня. | Macro shot of a blank smooth area of wood on a grave plate, empty space where a date should be, deep shadows, cinematic photorealistic film still, 16:9, no text
+072 | Розділ п'ятий. Коло. | Aerial top-down shot of the foggy village at night with a round empty square in the center, lanterns in a ring, cinematic photorealistic film still, 16:9
+073 | Андрій побіг. | Handheld low-angle shot of Andriy (34-year-old man, short dark brown hair, stubble, olive green field jacket) sprinting away from the cemetery, motion blur, moonlight, cinematic photorealistic film still, 16:9
+074 | Крізь городи, через ліс — | Andriy running through village vegetable gardens and sunflower stalks at night, branches whipping, cinematic photorealistic film still, 16:9
+075 | туди, де мала бути дорога і його машина. | First-person view running through a dark pine forest towards a faint gap between trees, flashlight shaking, cinematic photorealistic film still, 16:9
+076 | Він біг, доки не перехопило подих. | Close-up of Andriy gasping for breath, sweat on his face, breath vapor in cold air, blue light, cinematic photorealistic film still, 16:9
+077 | Дерева розступилися... | Shot from behind Andriy as the forest opens up ahead, warm lights appearing through fog, cinematic photorealistic film still, 16:9
+078 | і він знову опинився на площі. | Wide shot of Andriy stumbling out onto the same village square with lanterns, shocked, cinematic photorealistic film still, 16:9
+079 | Ті самі ліхтарі. Ті самі хати. | Symmetrical shot of the village square: the well, the lanterns, the house with blue shutters, identical to before, cinematic photorealistic film still, 16:9
+080 | Він кинувся в інший бік. | Dutch angle shot of Andriy turning sharply and running the other way, jacket flying, lantern light streaks, cinematic photorealistic film still, 16:9
+081 | Через міст. | Wide side shot of Andriy running across an old wooden bridge over a misty river at night, cinematic photorealistic film still, 16:9
+082 | Через поле. | Aerial shot of a lone figure running through a field of tall grass at night in moonlight, cinematic photorealistic film still, 16:9
+083 | Вздовж річки. | Low-angle shot of Andriy running along a riverbank, moon reflected in black water, fog, cinematic photorealistic film still, 16:9
+084 | І знову — площа. | High-angle shot of Andriy standing exhausted in the middle of the same lantern-lit village square, tiny in the frame, cinematic photorealistic film still, 16:9
+085 | Мешканці виходили з хат. | Medium shot of doors opening one after another, villagers in 1960s rural clothes stepping out, backlit by warm light, cinematic photorealistic film still, 16:9
+086 | Повільно. Без жодного слова. | Close-up of an old man's calm face with a fixed gentle smile walking slowly forward, fog, lantern light, cinematic photorealistic film still, 16:9
+087 | Вони ставали колом навколо нього. | Aerial top-down shot of dozens of villagers holding lanterns standing in a perfect circle around one man in the center of the square, cinematic photorealistic film still, 16:9
+088 | Не загрожували. Не наближалися. | Ground-level wide shot of the circle of villagers standing still at a distance, Andriy small in the center, fog, cinematic photorealistic film still, 16:9
+089 | Просто дивилися — з тією самою теплою усмішкою. | Row of close-up faces of villagers, children and elders, all with the same warm smile, lantern light from below, cinematic photorealistic film still, 16:9
+090 | Ніби мали цілу вічність, щоб дочекатися. | Close-up of a village child's unblinking pale eyes and calm smile, fog drifting, cold blue light, cinematic photorealistic film still, 16:9
+091 | Андрій упав на коліна посеред кола. | Low-angle shot of Andriy falling to his knees on the dirt of the square, the circle of lanterns around him, cinematic photorealistic film still, 16:9
+092 | І тоді вперед вийшла Ганна. | Hanna (80-year-old woman, deep wrinkles, pale blue eyes, white headscarf with faded red embroidery, grey knitted shawl) stepping forward out of the circle into lantern light, fog around her, cinematic photorealistic film still, 16:9
+# == Кадри 93–119: розвилка і світанок
+093 | Розділ шостий. Розвилка. | Aerial shot of a foggy mountain road splitting into two at a fork, one branch lit, one dark, at night, cinematic photorealistic film still, 16:9
+094 | «Не бійся, синку», — тихо сказала вона. | Close-up of Hanna (80-year-old woman, deep wrinkles, pale blue eyes, white headscarf with faded red embroidery, grey knitted shawl) crouching and speaking softly, lantern light, cinematic photorealistic film still, 16:9
+095 | «Це село бачать лише ті, хто колись мав тут жити. | Two-shot of Hanna and kneeling Andriy (34-year-old man, short dark brown hair, stubble, olive green field jacket) face to face in the circle of lanterns, cinematic photorealistic film still, 16:9
+096 | Тридцять чотири роки тому твоя мати їхала сюди, до мене. | Faded 1990s memory look: a young pregnant woman driving an old Soviet car on a misty mountain road, warm faded colors, film grain, cinematic photorealistic, 16:9
+097 | Але на розвилці звернула не туди. | High-angle shot of an old Soviet car at a road fork in fog turning onto the wrong branch, faded 1990s look, cinematic photorealistic film still, 16:9
+098 | І твоє життя пішло іншою дорогою. | Red taillights of an old car disappearing into fog on a dark road, long exposure feel, cinematic photorealistic film still, 16:9
+099 | А ми лишилися тут... чекати на того, ким ти міг стати». | Close-up of Hanna's sad pale blue eyes filled with tears, lantern light flickering, background villagers blurred, cinematic photorealistic film still, 16:9
+100 | Вона торкнулася його щоки холодною рукою. | Macro shot of an old wrinkled hand gently touching a man's stubbled cheek, cold blue light, frost breath, cinematic photorealistic film still, 16:9
+101 | «Ти можеш залишитися. Або піти. | Over-the-shoulder shot from behind Hanna looking at Andriy, who looks back at a dark road out of the village and a warm house, cinematic photorealistic film still, 16:9
+102 | Але пам'ятай: дорога сюди відкривається лише раз». | Extreme close-up of Hanna's lips and wrinkled face half in shadow, whispering, single candle flame, cinematic photorealistic film still, 16:9
+103 | Ліхтарі почали гаснути. | Wide shot of the circle of villagers as their lanterns begin going out, darkness creeping in, figures fading into fog, cinematic photorealistic film still, 16:9
+104 | Один за одним. | Close-up of a last lantern flame dying, smoke curl, Andriy's face barely lit behind it, near darkness, cinematic photorealistic film still, 16:9
+105 | Розділ сьомий. Світанок. | Wide shot of a misty Carpathian forest at dawn, soft pink and grey light, empty roadside, cinematic photorealistic film still, 16:9
+106 | Андрій розплющив очі. | Extreme close-up of Andriy's grey eyes snapping open, pale morning light, cinematic photorealistic film still, 16:9
+107 | Він сидів у своїй машині. Світало. | Shot through a misted windshield of Andriy (34-year-old man, short dark brown hair, stubble, olive green field jacket) waking in the driver's seat at dawn, cinematic photorealistic film still, 16:9
+108 | Двигун завівся з першого разу. | Close-up of a hand turning a car key in the ignition, dashboard lights glowing on, morning light, cinematic photorealistic film still, 16:9
+109 | Навігатор упіймав сигнал. | Macro shot of a phone screen with full signal bars and a loading map, warm dawn reflection, cinematic photorealistic film still, 16:9, no readable text
+110 | Він відкрив карту — довкола лише ліс. | Over-the-shoulder shot of a phone map showing only solid green forest around a single location dot, cinematic photorealistic film still, 16:9, no readable text
+111 | Жодного села. Жодної дороги. | Aerial shot rising above a lone car on a forest roadside, endless misty forest in every direction, no village anywhere, dawn, cinematic photorealistic film still, 16:9
+112 | Він видихнув і засміявся. | Medium shot of Andriy in the car laughing with relief, rubbing his face, warm sunrise light, cinematic photorealistic film still, 16:9
+113 | Просто сон. Утома. Туман. | Side view of the car on a quiet roadside, fog lifting in golden sunbeams through pines, peaceful, cinematic photorealistic film still, 16:9
+114 | А потім він побачив на задньому сидінні аркуш паперу. | Shot from the front seat looking back: a single sheet of old paper lying on an empty car back seat, morning light, cinematic photorealistic film still, 16:9
+115 | Дитячий малюнок. Його портрет. | Close-up of a man's trembling hands holding a child's charcoal drawing of his own portrait, cinematic photorealistic film still, 16:9
+116 | І підпис кривими літерами: «До зустрічі, Андрію». | Macro shot of the bottom corner of an old charcoal drawing with childish scribbled handwriting, smudged, cinematic photorealistic film still, 16:9
+117 | Він підвів очі на дзеркало заднього виду... | Close-up of Andriy slowly raising his eyes towards the rear-view mirror, tense, cold light, cinematic photorealistic film still, 16:9
+118 | і на мить побачив там Ганну. | Rear-view mirror reflection showing Hanna (80-year-old woman, deep wrinkles, pale blue eyes, white headscarf with faded red embroidery) sitting in the back seat, slightly blurred, eerie, cinematic photorealistic film still, 16:9
+119 | Вона усміхалася. | Extreme close-up in the mirror of Hanna's gentle smile and pale blue eyes, then darkness, cold blue tone, cinematic photorealistic film still, 16:9
