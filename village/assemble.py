@@ -362,7 +362,7 @@ def worker_init(cfg):
     r = np.sqrt(((xx - ow / 2) / (ow / 2)) ** 2 * 0.8 + ((yy - oh / 2) / (oh / 2)) ** 2 * 0.8)
     G["vign"] = (1 - 0.42 * np.clip(r - 0.45, 0, None) ** 1.6)[:, :, None].astype(np.float32)
     rng = np.random.default_rng(7)
-    G["grain"] = [rng.normal(0, 5.0, (oh, ow, 1)).astype(np.float32) for _ in range(6)]
+    G["grain"] = [rng.normal(0, 3.0, (oh, ow, 1)).astype(np.float32) for _ in range(6)]
 
 
 def source(i):
@@ -506,7 +506,7 @@ def main():
     ap.add_argument("--timings", default=None)
     ap.add_argument("--out", default=os.path.join(HERE, "out"))
     ap.add_argument("--scale", type=float, default=1.0)
-    ap.add_argument("--crf", type=int, default=18)
+    ap.add_argument("--crf", type=int, default=20)
     ap.add_argument("--workers", type=int, default=os.cpu_count() or 4)
     ap.add_argument("--no-ambient", action="store_true")
     ap.add_argument("--preview", type=float, nargs="*")
@@ -615,6 +615,9 @@ def main():
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *inputs, *maps, "-c:v", "copy",
                     "-t", f"{total:.3f}", "-movflags", "+faststart", final], check=True)
     shutil.rmtree(tmp, ignore_errors=True)
+    for p in (video, os.path.join(a.out, "ambient.wav")):
+        if os.path.exists(p):
+            os.remove(p)
     print(f"готово: {final}")
 
 
