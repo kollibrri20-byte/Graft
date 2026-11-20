@@ -34,7 +34,7 @@ def main():
     ap.add_argument("nums", nargs="+", type=int)
     ap.add_argument("--still", action="store_true")
     ap.add_argument("--res", default="960x540")
-    ap.add_argument("--samples", type=int, default=16)
+    ap.add_argument("--samples", type=int, default=8)
     ap.add_argument("--force", action="store_true")
     a = ap.parse_args()
     res = tuple(int(x) for x in a.res.split("x"))
@@ -48,6 +48,9 @@ def main():
         t0 = time.time()
         sc = lib.new_scene(res, a.samples)
         mats = lib.M()
+        tm = shots.TM()
+        mats.update(wall=tm["plaster"], thatch=tm["thatch"], ground=tm["mud"], road=tm["track"],
+                    wood=tm["planks"], grass=tm["forest"], floor=tm["floor"], plaster_in=tm["plaster_old"])
         fn = shots.SHOTS[n]
         kw = {"n": n} if "n" in inspect.signature(fn).parameters else {}
         fn(mats, F, **kw)
@@ -64,6 +67,8 @@ def main():
         print(f"[{n:03d}] {F} кадрів, {time.time() - t0:.0f} с", flush=True)
         lib._MATS.clear()
         lib._PINE.clear()
+        import assets
+        assets._TEX.clear()
 
 
 if __name__ == "__main__":

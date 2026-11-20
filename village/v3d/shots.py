@@ -13,6 +13,16 @@ from lib import (M, beam, box, cam_move, camera, church, cone, cyl, distance_fog
                  headlights, hut, lantern_pole, link, look_at, mat, moon_disc, point_light, road_strip, setp,
                  sphere, spot_light, sun, terrain, trunk_row, world)
 from actors import Actor, scan_head
+from assets import Hanna, Human, TM, hdri_world
+
+
+def andriy(name="andr"):
+    return Human("marvin", name, 1.8, tint=(0.55, 0.72, 0.38))
+
+
+def villager(i, name):
+    tints = [(0.8, 0.62, 0.45), (0.55, 0.55, 0.6), (0.7, 0.68, 0.6), (0.6, 0.45, 0.35), (0.5, 0.6, 0.5)]
+    return Human("marvin", name, 1.72 + 0.04 * (i % 3), tint=tints[i % len(tints)])
 
 SHOTS = {}
 
@@ -31,7 +41,7 @@ def shot(*nums):
 
 
 def night(fog_d=0.035, sky=NIGHT_SKY, fog=NIGHT_FOG, moon=MOON_K, moon_dir=(-0.4, 1.0, 0.55)):
-    world(sky=sky, fog=0.0)
+    hdri_world("moonlit_golf", 0.45, tint=(0.65, 0.78, 1.0))
     sun((math.radians(58), 0, math.radians(200)), moon, color=(0.55, 0.68, 1.0))
     moon_disc(moon_dir, 600, 12, 8)
     return fog_d, fog
@@ -51,8 +61,28 @@ def set_forest_road(mats, seed=1, road_w=4.5, curve=0.0, density=1.0):
 
     def avoid(x, y):
         rx = curve * math.sin(y / 30.0) * 8
-        return abs(x - rx) < road_w / 2 + 2.5
-    forest(mats, (-90, 90, -60, 260), int(900 * density), 14, 28, avoid=avoid, seed=seed)
+        return abs(x - rx) < road_w / 2 + 9
+    forest(mats, (-90, 90, -60, 260), int(900 * density), 16, 30, avoid=avoid, seed=seed)
+    # ближні стовбури з корою
+    bark = TM()["mosswood"]
+    r = random.Random(seed + 50)
+    for i in range(int(70 * density)):
+        y = r.uniform(-30, 160)
+        rx = curve * math.sin(y / 30.0) * 8
+        side = r.choice((-1, 1))
+        x = rx + side * r.uniform(road_w / 2 + 1.2, road_w / 2 + 9)
+        rr = r.uniform(0.18, 0.4)
+        o = cyl((x, y, 9), rr, 20, bark, verts=14)
+        o.rotation_euler = (r.uniform(-0.04, 0.04), r.uniform(-0.04, 0.04), r.uniform(0, 6))
+        # нижні сухі гілки
+        for k in range(3):
+            z = r.uniform(2.5, 6)
+            a = r.uniform(0, 6.28)
+            br = cyl((x + math.cos(a) * 0.6, y + math.sin(a) * 0.6, z), 0.03, 1.4, mats["bark"], verts=5,
+                     rot=(math.radians(70), 0, a + math.pi / 2))
+        # крона високо — темні конуси
+        cone((x, y, 16), rr * 9, 0, 9, mats["pine"], verts=10)
+        cone((x, y, 21), rr * 6, 0, 7, mats["pine"], verts=10)
     return pts
 
 
@@ -167,7 +197,7 @@ def s003(mats, F):
 def s004(mats, F):
     cfg = night(0.07)
     set_forest_road(mats, seed=4, road_w=1.6, curve=0.2)
-    a = Actor(mats, "andriy", "andr")
+    a = andriy()
     a.path([(0.0, 0, 0.25), (0.15, 6, 0.25)], 1, F)
     a.play("Walk", 1, F)
     hl = spot_light((0.35, 0.6, 1.25), (0, 0, 0), 600, size_deg=30)
@@ -185,7 +215,7 @@ def s004(mats, F):
 def s005(mats, F):
     cfg = night(0.08)
     set_forest_road(mats, seed=5, road_w=1.6, density=1.3)
-    a = Actor(mats, "andriy", "andr")
+    a = andriy()
     a.place((0, 0, 0.25), 0)
     a.path([(0, 0, 0.25), (0, 2.5, 0.25)], 1, F)
     a.play("Walk", 1, F, speed=0.7)
@@ -231,7 +261,7 @@ def s009(mats, F):
     cfg = night(0.045)
     set_village(mats, seed=9, doors=True)
     for i, (x, y, k) in enumerate([(-6.6, 6, "woman"), (6.6, 11, "man"), (-6.6, 17, "old"), (6.6, 22, "woman")]):
-        p = Actor(mats, k, f"v{i}")
+        p = villager(i, f"v{i}")
         yaw = 90 if x < 0 else -90
         side = -1 if x < 0 else 1
         p.place((x + side * 0.8, y, 0.2), yaw)
@@ -249,7 +279,7 @@ def s010(mats, F, n=10):
     set_village(mats, seed=10)
     people = [("woman", -1.2), ("old", 0.0), ("child", 1.1)]
     for i, (k, x) in enumerate(people):
-        p = Actor(mats, k, f"v{i}", 1.25 if k == "child" else 1.8)
+        p = villager(i, f"v{i}")
         p.place((x, 14, 0.2), 180)
         p.play("idle", 1, F + 1, offset=i * 7)
     point_light((0, 11.5, 2.4), 260, radius=0.3)
@@ -262,15 +292,14 @@ def s010(mats, F, n=10):
 def s011(mats, F):
     cfg = night(0.045)
     set_village(mats, seed=11)
-    a = Actor(mats, "andriy", "andr")
+    a = andriy()
     a.place((0, 10, 0.2), 0)
     a.play("idle", 1, F + 1)
     r = random.Random(11)
     for i in range(7):
         ang = math.radians(-150 + i * 50)
         x, y = math.sin(ang) * 5, 10 + math.cos(ang) * 5
-        p = Actor(mats, ["woman", "man", "old", "woman", "man", "child", "old"][i], f"v{i}",
-                  1.25 if i == 5 else 1.8)
+        p = villager(i, f"v{i}")
         p.place((x, y, 0.2), math.degrees(math.atan2(-(0 - x), (10 - y))) + 180)
         p.play("idle", 1, F + 1, offset=r.uniform(0, 20))
     cam = camera(lens=26)
@@ -282,10 +311,8 @@ def s011(mats, F):
 def s012(mats, F):
     cfg = night(0.05)
     hut(mats, (0, 2.5, 0), 0, lit=True, door_open=True, lights=False)
-    point_light((0, 0.2, 1.5), 60, radius=0.4)
-    h = Actor(mats, "hanna", "hanna", 1.62)
-    h.place((0, -0.15, 0.0), 180)
-    h.play("idle", 1, F + 1)
+    point_light((0, 0.2, 1.5), 22, radius=0.4)
+    h = Hanna((0, -0.05, 0.0), 0)
     c = cyl((0.32, -0.45, 1.05), 0.02, 0.16, mats["candle_wax"], verts=10)
     sphere((0.32, -0.45, 1.16), 0.015, mats["flame"], scale=(1, 1, 2))
     cl = point_light((0.32, -0.5, 1.2), 25, radius=0.02)
@@ -298,25 +325,23 @@ def s012(mats, F):
 @shot(13)
 def s013(mats, F):
     world(sky=(0.0, 0.0, 0.0), fog=0.0)
-    head, mesh = scan_head((0, 0, 0), (0, 0, 0), 0.25)
-    point_light((0.6, -0.5, 0.15), 18, (1.0, 0.6, 0.25), radius=0.15)
-    point_light((-0.6, -0.4, 0.1), 10, (0.35, 0.5, 1.0), radius=0.2)
-    bpy.context.view_layer.update()
-    c = Vector(mesh.matrix_world.translation)
-    bb = [mesh.matrix_world @ Vector(v) for v in mesh.bound_box]
-    zmax = max(v.z for v in bb)
-    zmin = min(v.z for v in bb)
-    ymin = min(v.y for v in bb)
-    eye_z = zmin + (zmax - zmin) * 0.62
-    cam = camera(lens=85, dof=0.25, fstop=2.8)
-    cam_move(cam, 1, F, (0, ymin - 0.33, eye_z), (0, ymin - 0.26, eye_z), (0, ymin + 0.05, eye_z), (0, ymin + 0.05, eye_z))
-
+    a = andriy()
+    a.place((0, 0, 0), 0)
+    a.play("idle", 1, F + 1)
+    sc = bpy.context.scene
+    sc.frame_set(F // 2)
+    h = a.bone_world("Head") + Vector((0, 0, 0.1))
+    point_light(h + Vector((0.7, -0.6, 0.1)), 20, (1.0, 0.6, 0.25), radius=0.2)
+    point_light(h + Vector((-0.7, -0.5, 0.0)), 12, (0.35, 0.5, 1.0), radius=0.25)
+    cam = camera(lens=100, dof=0.4, fstop=2.8)
+    fwd = Vector((0, -1, 0))
+    cam_move(cam, 1, F, h + Vector((0, -0.55, 0.0)), h + Vector((0, -0.42, 0.0)), h, h)
 
 @shot(14)
 def s014(mats, F):
     cfg = night(0.05)
     set_village(mats, seed=14)
-    a = Actor(mats, "andriy", "andr")
+    a = andriy()
     a.place((0, 12, 0.2), 0)
     a.play("idle", 1, F + 1)
     cam = camera(lens=28)
@@ -341,7 +366,18 @@ def s015(mats, F):
     distance_fog(0.0025, (0.35, 0.36, 0.38))
 
 
-def driver_profile(mats, F, sunset=True):
+def head_closeup(mats, F, light, back, cam_off0, cam_off1, lens=60, look=(0, 0, 0)):
+    a = andriy()
+    a.place((0, 0, 0), 0)
+    a.play("idle", 1, F + 1, speed=0.6)
+    bpy.context.scene.frame_set(F // 2)
+    h = a.bone_world("Head") + Vector((0, 0, 0.09))
+    cam = camera(lens=lens, dof=(Vector(cam_off0).length), fstop=2.2)
+    cam_move(cam, 1, F, h + Vector(cam_off0), h + Vector(cam_off1), h + Vector(look), h + Vector(look))
+    return a, h
+
+
+def driver_profile_old(mats, F, sunset=True):
     world(sky=(0.0, 0.0, 0.0), fog=0.0)
     head, mesh = scan_head((0, 0, 0), (0, 0, math.radians(90)), 0.25)
     bpy.context.view_layer.update()
@@ -355,35 +391,23 @@ def driver_profile(mats, F, sunset=True):
 
 @shot(16)
 def s016(mats, F):
-    head, mesh, zmin, zmax = driver_profile(mats, F)
-    sl = point_light((0.0, 1.2, 0.2), 60, (1.0, 0.5, 0.18), radius=0.3)
-    flicker(sl, 1, F, 60, 0.7, seed=16, speed=2.2)
-    point_light((0, -1.2, 0.3), 4, (0.4, 0.5, 0.8), radius=0.4)
-    # рама вікна й кермо
-    box((0, 1.0, zmax + 0.1), (1.2, 0.06, 0.08), mats["boots"])
-    cam = camera(lens=50, dof=0.7)
-    ez = zmin + (zmax - zmin) * 0.6
-    cam_move(cam, 1, F, (-0.75, 0.02, ez), (-0.7, 0.08, ez), (0, 0.02, ez - 0.02), (0, 0.04, ez - 0.02))
-
+    world(sky=(0.0, 0.0, 0.0), fog=0.0)
+    a, h = head_closeup(mats, F, None, None, (-0.85, -0.05, 0.0), (-0.8, 0.05, 0.0), lens=55)
+    sl = point_light(h + Vector((0.9, -0.3, 0.2)), 90, (1.0, 0.5, 0.18), radius=0.4)
+    flicker(sl, 1, F, 90, 0.7, seed=16, speed=2.2)
+    point_light(h + Vector((-0.6, -0.8, 0.3)), 6, (0.4, 0.5, 0.8), radius=0.4)
+    box(h + Vector((0.6, 0, 0.45)), (0.06, 1.6, 0.06), mats["boots"])
+    box(h + Vector((0.6, 0.6, 0)), (0.06, 0.06, 1.2), mats["boots"])
 
 @shot(17)
 def s017(mats, F):
-    world(sky=(0.6, 0.42, 0.25), strength=0.5, fog=0.0)
-    head, mesh = scan_head((0, 0, 0), (0, 0, math.radians(180)), 0.25)
-    bpy.context.view_layer.update()
-    bb = [mesh.matrix_world @ Vector(v) for v in mesh.bound_box]
-    zmin, zmax = min(v.z for v in bb), max(v.z for v in bb)
-    ymax = max(v.y for v in bb)
-    ez = zmin + (zmax - zmin) * 0.62
+    world(sky=(0.6, 0.42, 0.25), strength=0.6, fog=0.0)
+    a, h = head_closeup(mats, F, None, None, (0.55, -0.45, 0.02), (0.5, -0.4, 0.03), lens=60, look=(0, -0.08, 0))
     # плівкова камера біля ока
-    box((0.05, ymax + 0.07, ez), (0.16, 0.07, 0.1), mats["metal"], bevel=0.008)
-    cyl((0.07, ymax + 0.15, ez - 0.01), 0.035, 0.09, mats["boots"], rot=(math.radians(90), 0, 0))
-    hair = sphere((0, 0, zmax - 0.07), 0.11, mats["hair"], scale=(1.0, 1.1, 0.55))
-    point_light((0.0, -1.0, 0.6), 160, (1.0, 0.7, 0.35), radius=0.6)
-    point_light((0.8, 0.8, 0.2), 20, (1.0, 0.8, 0.6), radius=0.5)
-    cam = camera(lens=60, dof=0.55, fstop=2.0)
-    cam_move(cam, 1, F, (0.55, 0.45, ez), (0.5, 0.5, ez), (0.0, 0.05, ez), (0.0, 0.08, ez))
-
+    box(h + Vector((0.035, -0.13, 0.0)), (0.15, 0.07, 0.095), mats["metal"], bevel=0.008)
+    cyl(h + Vector((0.05, -0.2, -0.005)), 0.034, 0.08, mats["boots"], rot=(math.radians(90), 0, 0))
+    point_light(h + Vector((0.0, 1.0, 0.5)), 220, (1.0, 0.7, 0.35), radius=0.6)
+    point_light(h + Vector((0.8, -0.8, 0.2)), 25, (1.0, 0.8, 0.6), radius=0.5)
 
 @shot(18)
 def s018(mats, F):
@@ -501,7 +525,7 @@ def s024(mats, F):
     sun((math.radians(60), 0, math.radians(200)), 0.8, color=(0.6, 0.7, 0.9))
     set_forest_road(mats, seed=24, road_w=3.6)
     hatchback(mats, (1.2, 0, 0.25), 0, lights=False, tail=False)
-    a = Actor(mats, "andriy", "andr")
+    a = andriy()
     a.place((-0.6, -0.5, 0.25), 180)
     a.play("idle", 1, F + 1)
     cam = camera(lens=32)

@@ -268,7 +268,10 @@ class Human:
         if act is None:
             return None
         fps = bpy.context.scene.render.fps
-        st = self.track.strips.new(f"{action}_{f0}", int(f0), act)
+        first = not getattr(self, "_nstrips", 0)
+        self._nstrips = getattr(self, "_nstrips", 0) + 1
+        track = self.track if first else self.arm.animation_data.nla_tracks.new()
+        st = track.strips.new(f"{action}_{f0}", int(f0), act)
         try:
             if act.slots:
                 st.action_slot = act.slots[0]
@@ -280,7 +283,7 @@ class Human:
         st.scale = fps / SRC_FPS / speed
         one = max((a1 - a0 - offset) * st.scale, 1e-3)
         st.repeat = max(1.0, (f1 - f0) / one)
-        st.extrapolation = "HOLD"
+        st.extrapolation = "HOLD" if first else "HOLD_FORWARD"
         return st
 
     def place(self, loc, yaw_deg):
@@ -300,7 +303,7 @@ class Human:
             seg = max(L[i + 1] - L[i], 1e-6)
             self.root.location = P[i].lerp(P[i + 1], (d - L[i]) / seg) + Vector((0, 0, self.zoff * self.k))
             dv = P[i + 1] - P[i]
-            self.root.rotation_euler = (0, 0, math.atan2(dv.y, dv.x) - math.pi / 2 + math.radians(yaw_fix))
+            self.root.rotation_euler = (0, 0, math.atan2(dv.y, dv.x) + math.pi / 2 + math.radians(yaw_fix))
             self.root.keyframe_insert("location", frame=f)
             self.root.keyframe_insert("rotation_euler", frame=f)
 
