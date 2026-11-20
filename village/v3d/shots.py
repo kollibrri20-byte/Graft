@@ -214,21 +214,24 @@ def s004(mats, F):
 
 @shot(5)
 def s005(mats, F):
-    cfg = night(0.08)
+    cfg = night(0.06)
     set_forest_road(mats, seed=5, road_w=1.6, density=0.9)
     a = andriy()
-    a.place((0, 0, 0.25), 0)
-    a.path([(0, 0, 0.25), (0, 2.5, 0.25)], 1, F)
-    a.play("Walk", 1, F, speed=0.7)
-    hl = spot_light((0.3, 0.5, 1.2), (0, 0, 0), 900, size_deg=24)
+    a.path([(0, 0, 0.25), (0.1, 3.0, 0.25)], 1, F)
+    a.play("walk", 1, F, speed=0.75)
+    for f in (1, F):
+        bpy.context.scene.frame_set(f)
+    hl = spot_light((0.3, 0.6, 1.2), (0, 0, 0), 900, size_deg=24)
     hl.parent = a.root
-    hl.rotation_euler = (math.radians(-82), 0, math.radians(-12))
-    bm = beam((0.3, 0.5, 1.2), (4, 16, 1.0), 1.8, k=1.3)
-    bm.parent = a.root
-    cam = camera(lens=50, dof=1.2)
-    cam_move(cam, 1, F, (2.2, -0.5, 1.5), (2.2, 2.0, 1.5), (0.0, 0.8, 1.2), (0.1, 3.0, 1.2))
+    hl.location = (Vector((0.28, -0.35, 1.2)) - Vector((0, 0, a.zoff * a.k))) / a.k
+    hl.rotation_euler = (math.radians(-95), 0, 0)
+    bm = beam((0.3, 0.4, 1.2), (1.0, 12, 0.6), 1.0, k=0.55)
+    for f in range(1, F + 1):
+        bm.location.y = 0.4 + 6.5 + 3.0 * f / F
+        bm.keyframe_insert("location", frame=f)
+    cam = camera(lens=40)
+    cam_move(cam, 1, F, (1.6, 6.5, 1.4), (1.5, 6.8, 1.4), (0.1, 1.5, 1.2), (0.1, 3.5, 1.2))
     finish_fog(cfg)
-
 
 @shot(6, 7)
 def s006(mats, F, n=6):
@@ -278,14 +281,14 @@ def s009(mats, F):
 def s010(mats, F, n=10):
     cfg = night(0.05)
     set_village(mats, seed=10)
-    people = [("woman", -1.2), ("old", 0.0), ("child", 1.1)]
-    for i, (k, x) in enumerate(people):
-        p = villager(i, f"v{i}")
-        p.place((x, 14, 0.2), 0)
-        p.play("idle", 1, F + 1, offset=i * 7)
+    Hanna((0.0, 14.2, 0.2), 0)
+    for i, (x, y) in enumerate(((-1.3, 15.2), (1.4, 15.6))):
+        p = villager(i * 2 + 1, f"v{i}")
+        p.place((x, y, 0.2), 0)
+        p.play("idle", 1, F + 1, offset=i * 17)
     point_light((0, 11.5, 2.4), 260, radius=0.3)
     cam = camera(lens=42, dof=4.0)
-    cam_move(cam, 1, F, (0, 9.0, 1.5), (0, 10.0, 1.5), (0, 14, 1.4), (0, 14, 1.45))
+    cam_move(cam, 1, F, (0, 10.2, 1.5), (0, 11.0, 1.5), (0, 14, 1.35), (0, 14, 1.4))
     finish_fog(cfg)
 
 
@@ -485,40 +488,30 @@ def s022(mats, F):
     world(sky=(0, 0, 0), fog=0.0)
     point_light((-0.2, 0.0, 1.6), 5, (0.5, 0.6, 0.9), radius=0.4, shadow=False)
     car_interior(mats, phone_mode="nosignal")
-    cam = camera(lens=90, dof=0.35, fstop=2.0)
-    cam_move(cam, 1, F, (0.15, 0.27, 1.25), (0.15, 0.33, 1.22), (0.15, 0.62, 1.12), (0.15, 0.62, 1.12))
+    cam = camera(lens=55, dof=0.4, fstop=2.8)
+    cam_move(cam, 1, F, (0.12, 0.2, 1.2), (0.13, 0.26, 1.18), (0.15, 0.62, 1.12), (0.15, 0.62, 1.12))
 
 
 @shot(23)
 def s023(mats, F):
-    world(sky=(0, 0, 0), fog=0.0)
-    point_light((-0.6, 0.0, 1.5), 4, (0.5, 0.6, 0.9), radius=0.4, shadow=False)
-    car_interior(mats)
-    gm = mat("gauge", (0.3, 0.5, 1.0), 0.4, emit=(0.35, 0.55, 1.0), strength=2)
-    nd = mat("needle", (1, 0.3, 0.1), 0.4, emit=(1, 0.3, 0.1), strength=3)
-    wl = mat("warn", (1, 0.15, 0.05), 0.4, emit=(1, 0.15, 0.05), strength=4)
-    for gx in (-0.5, -0.26):
-        bpy.ops.mesh.primitive_torus_add(major_radius=0.07, minor_radius=0.004, location=(gx, 0.6, 1.0),
-                                         rotation=(math.radians(90), 0, 0))
-        bpy.context.object.data.materials.append(gm)
-        n = box((gx, 0.595, 1.0), (0.004, 0.004, 0.06), nd)
-        for f in range(1, F + 1):
-            u = min(1, f / F * 1.4)
-            n.rotation_euler = (0, math.radians(-120 + 150 * (1 - u)), 0)
-            n.keyframe_insert("rotation_euler", frame=f)
-    box((-0.38, 0.6, 0.93), (0.05, 0.004, 0.025), wl)
-    # світіння панелі згасає
-    for m in (gm, nd, wl):
-        b = m.node_tree.nodes["Principled BSDF"]
-        s0 = b.inputs["Emission Strength"].default_value
-        for f in range(1, F + 1):
-            u = f / F
-            k = 1.0 if u < 0.45 else max(0.0, 1 - (u - 0.45) / 0.35) * (0.6 + 0.4 * random.random())
-            b.inputs["Emission Strength"].default_value = s0 * k
-            b.inputs["Emission Strength"].keyframe_insert("default_value", frame=f)
-    cam = camera(lens=70, dof=0.4)
-    cam_move(cam, 1, F, (-0.4, 0.15, 1.15), (-0.38, 0.22, 1.12), (-0.38, 0.6, 1.0), (-0.38, 0.6, 1.0))
-
+    world(sky=(0.09, 0.1, 0.13), fog=0.0)
+    sun((math.radians(70), 0, math.radians(230)), 0.5, color=(0.8, 0.7, 0.75))
+    set_forest_road(mats, seed=23, road_w=3.6, density=0.7)
+    hatchback(mats, (0, 0, 0.25), 0, lights=True, tail=True)
+    hl = headlights((0, 0, 0.25), 0, 0.9, 20)
+    for f in range(1, F + 1):
+        u = f / F
+        k = 1.0 if u < 0.35 else (0.0 if u > 0.75 else (0.5 + 0.5 * math.sin(f * 2.1)) * (0.75 - u) / 0.4)
+        for o in hl:
+            if o.type == "LIGHT":
+                o.data.energy = 900 * 0.9 * k
+                o.data.keyframe_insert("energy", frame=f)
+            else:
+                o.hide_render = k < 0.15
+                o.keyframe_insert("hide_render", frame=f)
+    cam = camera(lens=30)
+    cam_move(cam, 1, F, (3.5, 6.5, 1.3), (3.3, 6.0, 1.3), (0, 0, 0.8), (0, 0, 0.8))
+    distance_fog(0.03, (0.1, 0.11, 0.13))
 
 @shot(24)
 def s024(mats, F):
@@ -527,7 +520,7 @@ def s024(mats, F):
     set_forest_road(mats, seed=24, road_w=3.6)
     hatchback(mats, (1.2, 0, 0.25), 0, lights=False, tail=False)
     a = andriy()
-    a.place((-0.6, -0.5, 0.25), 180)
+    a.place((-0.6, -0.5, 0.25), 0)
     a.play("idle", 1, F + 1)
     cam = camera(lens=32)
     cam_move(cam, 1, F, (0.3, 4.5, 1.7), (0.2, 3.6, 1.65), (-0.4, -10, 1.2), (-0.4, -12, 1.2))

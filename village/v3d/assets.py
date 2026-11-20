@@ -91,7 +91,7 @@ def TM():
     )
 
 
-def hdri_world(name="moonlit_golf", strength=0.6, rot=0.0, tint=(1, 1, 1), bg_strength=None):
+def hdri_world(name="moonlit_golf", strength=0.6, rot=0.0, tint=(1, 1, 1), bg_strength=None, cam_sky=((0.06, 0.08, 0.12), (0.01, 0.015, 0.03))):
     sc = bpy.context.scene
     w = bpy.data.worlds.new("w_" + name)
     sc.world = w
@@ -113,6 +113,24 @@ def hdri_world(name="moonlit_golf", strength=0.6, rot=0.0, tint=(1, 1, 1), bg_st
     nt.links.new(env.outputs["Color"], mix.inputs["A"])
     nt.links.new(mix.outputs["Result"], bg.inputs["Color"])
     bg.inputs["Strength"].default_value = strength
+    # у кадрі — рівне небо (градієнт), панорама лише освітлює сцену
+    if cam_sky is not None:
+        lp = nt.nodes.new("ShaderNodeLightPath")
+        sky = nt.nodes.new("ShaderNodeBackground")
+        grad = nt.nodes.new("ShaderNodeValToRGB")
+        sep = nt.nodes.new("ShaderNodeSeparateXYZ")
+        nt.links.new(tc.outputs["Generated"], sep.inputs["Vector"])
+        nt.links.new(sep.outputs["Z"], grad.inputs["Fac"])
+        grad.color_ramp.elements[0].position = 0.5
+        grad.color_ramp.elements[0].color = (*cam_sky[0], 1)
+        grad.color_ramp.elements[1].position = 0.75
+        grad.color_ramp.elements[1].color = (*cam_sky[1], 1)
+        nt.links.new(grad.outputs["Color"], sky.inputs["Color"])
+        ms = nt.nodes.new("ShaderNodeMixShader")
+        nt.links.new(lp.outputs["Is Camera Ray"], ms.inputs["Fac"])
+        nt.links.new(bg.outputs["Background"], ms.inputs[1])
+        nt.links.new(sky.outputs["Background"], ms.inputs[2])
+        nt.links.new(ms.outputs["Shader"], nt.nodes["World Output"].inputs["Surface"])
     return w
 
 
