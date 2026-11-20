@@ -5,7 +5,7 @@ import random
 import bpy
 from mathutils import Euler, Vector
 
-FPS = 12
+FPS = 15
 
 
 def setp(obj, name, value):
@@ -28,7 +28,7 @@ def new_scene(res=(960, 540), samples=12):
     sc.render.image_settings.file_format = "PNG"
     sc.view_settings.view_transform = "AgX"
     setp(sc.view_settings, "look", "AgX - Medium High Contrast")
-    sc.view_settings.exposure = 1.0
+    sc.view_settings.exposure = 1.6
     ee = sc.eevee
     setp(ee, "taa_render_samples", samples)
     setp(ee, "volumetric_tile_size", "4")
@@ -358,7 +358,8 @@ def forest(mats, area, n, hmin=10, hmax=22, avoid=None, seed=0, ground_fn=None):
         o = bpy.data.objects.new("pine", meshes[r.randrange(3)])
         z = ground_fn(x, y) if ground_fn else 0
         o.location = (x, y, z - 0.3)
-        o.scale = (h * r.uniform(0.85, 1.15), h * r.uniform(0.85, 1.15), h)
+        w = h * r.uniform(0.34, 0.44)
+        o.scale = (w, w, h)
         o.rotation_euler = (r.uniform(-0.03, 0.03), r.uniform(-0.03, 0.03), r.uniform(0, 6.28))
         link(o)
         placed += 1
@@ -804,3 +805,106 @@ def distance_fog(density=0.03, color=(0.05, 0.07, 0.11), strength=1.0, height_fa
         nt.links.new(em.outputs["Emission"], mix.inputs[2])
         nt.links.new(mix.outputs["Shader"], out.inputs["Surface"])
         m["fogged"] = 1
+
+
+# --------------------------------------------------------------------------
+# Світловий промінь у тумані (фейковий об'єм: напівпрозорий конус, що світиться)
+# --------------------------------------------------------------------------
+def beam(origin, target, radius, color=(0.9, 0.95, 1.0), k=1.5, length=None, name="beam"):
+    o_ = Vector(origin)
+    d = Vector(target) - o_
+    L = length or d.length
+    bpy.ops.mesh.primitive_cone_add(vertices=32, radius1=radius, radius2=0.03, depth=L, end_fill_type="NOTHING")
+    o = bpy.context.object
+    o.name = name
+    m = bpy.data.materials.new(name + "_m")
+    m.use_nodes = True
+    setp(m, "surface_render_method", "BLENDED")
+    setp(m, "blend_method", "BLEND")
+    setp(m, "use_backface_culling", False)
+    nt = m.node_tree
+    nt.nodes.remove(nt.nodes["Principled BSDF"])
+    tc = nt.nodes.new("ShaderNodeTexCoord")
+    sep = nt.nodes.new("ShaderNodeSeparateXYZ")
+    nt.links.new(tc.outputs["Generated"], sep.inputs["Vector"])
+    # z=1 біля джерела (верх конуса), z=0 на кінці; м'якшаємо краї за кутом огляду
+    pw = nt.nodes.new("ShaderNodeMath")
+    pw.operation = "POWER"
+    pw.inputs[1].default_value = 2.2
+    nt.links.new(sep.outputs["Z"], pw.inputs[0])
+    lw = nt.nodes.new("ShaderNodeLayerWeight")
+    lw.inputs["Blend"].default_value = 0.6
+    inv = nt.nodes.new("ShaderNodeMath")
+    inv.operation = "SUBTRACT"
+    inv.inputs[0].default_value = 1.0
+    nt.links.new(lw.outputs["Facing"], inv.inputs[1])
+    mul = nt.nodes.new("ShaderNodeMath")
+    mul.operation = "MULTIPLY"
+    nt.links.new(pw.outputs[0], mul.inputs[0])
+    nt.links.new(inv.outputs[0], mul.inputs[1])
+    nz = nt.nodes.new("ShaderNodeTexNoise")
+    nz.inputs["Scale"].default_value = 3.0
+    mul2 = nt.nodes.new("ShaderNodeMath")
+    mul2.operation = "MULTIPLY"
+    nt.links.new(mul.outputs[0], mul2.inputs[0])
+    nt.links.new(nz.outputs["Fac"], mul2.inputs[1])
+    em = nt.nodes.new("ShaderNodeEmission")
+    em.inputs["Color"].default_value = (*color, 1)
+    mk = nt.nodes.new("ShaderNodeMath")
+    mk.operation = "MULTIPLY"
+    mk.inputs[1].default_value = k
+    nt.links.new(mul2.outputs[0], mk.inputs[0])
+    nt.links.new(mk.outputs[0], em.inputs["Strength"])
+    tr = nt.nodes.new("ShaderNodeBsdfTransparent")
+    add = nt.nodes.new("ShaderNodeAddShader")
+    nt.links.new(tr.outputs[0], add.inputs[0])
+    nt.links.new(em.outputs[0], add.inputs[1])
+    nt.links.new(add.outputs[0], nt.nodes["Material Output"].inputs["Surface"])
+    m["fogged"] = 1
+    o.data.materials.append(m)
+    setp(o, "visible_shadow", False)
+    # орієнтуємо: вершина конуса (radius2) у джерелі
+    o.location = o_ + d.normalized() * (L / 2)
+    o.rotation_euler = (-d).to_track_quat("Z", "Y").to_euler()
+    return o
+
+
+def hatchback(mats, loc, yaw, m=None, lights=True, tail=True, lit_k=1.0, old=False):
+    m = m or (mats["car_old"] if old else mats["car"])
+    parts = []
+    parts.append(box((0, 0, 0.62), (1.75, 3.9, 0.7), m, bevel=0.12))
+    parts.append(box((0, -0.25, 1.18), (1.6, 2.2, 0.55), m, bevel=0.12))
+    for sx in (-0.8, 0.8):
+        parts.append(box((sx, -0.25, 1.18), (0.04, 2.0, 0.42), mats["glass"]))
+    parts.append(box((0, 0.88, 1.15), (1.5, 0.05, 0.45), mats["glass"], rot=(math.radians(-30), 0, 0)))
+    parts.append(box((0, -1.37, 1.15), (1.5, 0.05, 0.42), mats["glass"], rot=(math.radians(25), 0, 0)))
+    for sx in (-0.82, 0.82):
+        for sy in (-1.25, 1.25):
+            parts.append(cyl((sx, sy, 0.33), 0.33, 0.24, mats["boots"], rot=(0, math.radians(90), 0), verts=20))
+    if lights:
+        for sx in (-0.6, 0.6):
+            parts.append(box((sx, 1.96, 0.72), (0.3, 0.04, 0.14), mats["head_light"]))
+    if tail:
+        for sx in (-0.65, 0.65):
+            parts.append(box((sx, -1.96, 0.78), (0.25, 0.04, 0.12), mats["red_light"]))
+    eu = Euler((0, 0, yaw))
+    for p in parts:
+        p.location.rotate(eu)
+        p.location += Vector(loc)
+        p.rotation_euler.z += yaw
+    return parts
+
+
+def headlights(loc, yaw, k=1.0, length=28):
+    out = []
+    eu = Euler((0, 0, yaw))
+    for sx in (-0.6, 0.6):
+        o = Vector((sx, 2.0, 0.72))
+        o.rotate(eu)
+        o += Vector(loc)
+        fwd = Vector((0, 1, -0.06))
+        fwd.rotate(eu)
+        rot = (fwd * -1).to_track_quat("Z", "Y").to_euler()
+        out.append(spot_light(o, rot, 900 * k, color=(1, 0.95, 0.85), size_deg=40, blend=0.5))
+        out.append(beam(o, o + fwd * length, 2.4, (1, 0.95, 0.85), 0.6 * k))
+    return out
